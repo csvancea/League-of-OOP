@@ -59,6 +59,10 @@ public abstract class BasicHero implements IMapEntity {
         return y;
     }
     public final void setPosition(final int newX, final int newY) {
+        if (isDead()) {
+            return;
+        }
+
         if (getMap() != null) {
             if (this.x != -1 && this.y != -1) {
                 getMap().getEntities(this.x, this.y).remove(this);
@@ -91,6 +95,10 @@ public abstract class BasicHero implements IMapEntity {
     }
     public final void setLevel(final int newLevel) {
         this.level = newLevel;
+
+        if (!isDead()) {
+            setHP(getMaxHP());
+        }
     }
     public final void increaseLevel() {
         setLevel(getLevel() + 1);
