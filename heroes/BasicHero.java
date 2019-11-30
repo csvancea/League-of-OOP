@@ -25,10 +25,10 @@ public abstract class BasicHero implements IMapEntity {
     public abstract int getInitialHP();
     public abstract int getHPBonusPerLevel();
 
-    final int getMaxHP() {
+    public final int getMaxHP() {
         return getInitialHP() + getLevel() * getHPBonusPerLevel();
     }
-    final boolean isDead() {
+    public final boolean isDead() {
         return getHP() == 0;
     }
 
@@ -37,63 +37,63 @@ public abstract class BasicHero implements IMapEntity {
         return MapEntityType.HERO;
     }
 
-    final void goUp() {
+    public final void goUp() {
         setPosition(getX(), getY() - 1);
     }
-    final void goDown() {
+    public final void goDown() {
         setPosition(getX(), getY() + 1);
     }
-    final void goLeft() {
+    public final void goLeft() {
         setPosition(getX() - 1, getY());
     }
-    final void goRight() {
+    public final void goRight() {
         setPosition(getX() + 1, getY());
     }
-    final int getX() {
+    public final int getX() {
         return x;
     }
-    final int getY() {
+    public final int getY() {
         return y;
     }
-    final void setPosition(final int newX, final int newY) {
+    public final void setPosition(final int newX, final int newY) {
         this.x = newX;
         this.y = newY;
     }
 
-    final int getXP() {
+    public final int getXP() {
         return xp;
     }
-    final void setXP(final int newXP) {
+    public final void setXP(final int newXP) {
         this.xp = newXP;
 
         while (newXP >= BASE_XP_FOR_LEVEL_UP + getLevel() * MULTIPLIER_FOR_LEVEL_UP) {
             increaseLevel();
         }
     }
-    final void increaseXP(final int amount) {
+    public final void increaseXP(final int amount) {
         setXP(getXP() + amount);
     }
 
-    final int getLevel() {
+    public final int getLevel() {
         return level;
     }
-    final void setLevel(final int newLevel) {
+    public final void setLevel(final int newLevel) {
         this.level = newLevel;
     }
-    final void increaseLevel() {
+    public final void increaseLevel() {
         setLevel(getLevel() + 1);
     }
 
-    final int getHP() {
+    public final int getHP() {
         return hp;
     }
-    final void setHP(final int newHP) {
+    public final void setHP(final int newHP) {
         this.hp = Math.max(0, newHP);
     }
-    final void increaseHP(final int amount) {
+    public final void increaseHP(final int amount) {
         setHP(getHP() + amount);
     }
-    final void decreaseHP(final int amount) {
+    public final void decreaseHP(final int amount) {
         setHP(getHP() - amount);
     }
 }
