@@ -24,6 +24,12 @@ public final class GameMap {
         this.map = new Cell[maxX][maxY];
         this.maxX = maxX;
         this.maxY = maxY;
+
+        for (int x = 0; x != maxX; ++x) {
+            for (int y = 0; y != maxY; ++y) {
+                this.map[x][y] = new Cell();
+            }
+        }
     }
 
     public void setSurface(final int x, final int y, final SurfaceType surfaceType) {
