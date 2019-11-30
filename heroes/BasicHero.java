@@ -1,5 +1,6 @@
 package heroes;
 
+import map.GameMap;
 import map.entity.IMapEntity;
 import map.entity.MapEntityType;
 
@@ -11,8 +12,10 @@ public abstract class BasicHero implements IMapEntity {
     private int xp;
     private int level;
     private int hp;
+    private GameMap map;
 
     public BasicHero() {
+        setMap(null);
         setPosition(-1, -1);
         setXP(0);
         setLevel(0);
@@ -56,6 +59,15 @@ public abstract class BasicHero implements IMapEntity {
         return y;
     }
     public final void setPosition(final int newX, final int newY) {
+        if (getMap() != null) {
+            if (this.x != -1 && this.y != -1) {
+                getMap().getEntities(this.x, this.y).remove(this);
+            }
+            if (newX != -1 && newY != -1) {
+                getMap().getEntities(newX, newY).add(this);
+            }
+        }
+
         this.x = newX;
         this.y = newY;
     }
@@ -95,5 +107,12 @@ public abstract class BasicHero implements IMapEntity {
     }
     public final void decreaseHP(final int amount) {
         setHP(getHP() - amount);
+    }
+
+    public final GameMap getMap() {
+        return map;
+    }
+    public final void setMap(final GameMap map) {
+        this.map = map;
     }
 }
