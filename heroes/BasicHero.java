@@ -12,8 +12,8 @@ public abstract class BasicHero implements IMapEntity {
     private int level;
     private int hp;
 
-    public BasicHero(final int x, final int y) {
-        setPosition(x, y);
+    public BasicHero() {
+        setPosition(-1, -1);
         setXP(0);
         setLevel(0);
         setHP(getMaxHP());
