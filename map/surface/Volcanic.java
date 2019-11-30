@@ -2,7 +2,7 @@ package map.surface;
 
 public final class Volcanic implements ISurface {
     @Override
-    public SurfaceType getType() {
+    public SurfaceType getSurfaceType() {
         return SurfaceType.VOLCANIC;
     }
 }

@@ -4,5 +4,5 @@ public interface ISurface {
     /**
      * @return surface type
      */
-    SurfaceType getType();
+    SurfaceType getSurfaceType();
 }

@@ -2,7 +2,7 @@ package map.surface;
 
 public final class Land implements ISurface {
     @Override
-    public SurfaceType getType() {
+    public SurfaceType getSurfaceType() {
         return SurfaceType.LAND;
     }
 }
