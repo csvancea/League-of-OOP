@@ -1,8 +1,11 @@
 package heroes;
 
+import map.surface.SurfaceType;
+
 public final class Pyromancer extends BasicHero {
     private static final int INITIAL_HP = 500;
     private static final int HP_BONUS_PER_LEVEL = 50;
+    private static final int LAND_MODIFIER = 25;
 
     @Override
     public HeroType getHeroType() {
@@ -17,6 +20,14 @@ public final class Pyromancer extends BasicHero {
     @Override
     public int getHPBonusPerLevel() {
         return HP_BONUS_PER_LEVEL;
+    }
+
+    @Override
+    public int getLandModifier(final SurfaceType surfaceType) {
+        if (surfaceType == SurfaceType.VOLCANIC) {
+            return LAND_MODIFIER;
+        }
+        return 0;
     }
 
     @Override

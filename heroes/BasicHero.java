@@ -3,6 +3,7 @@ package heroes;
 import map.GameMap;
 import map.entity.IMapEntity;
 import map.entity.MapEntityType;
+import map.surface.SurfaceType;
 
 public abstract class BasicHero implements IMapEntity {
     private static final int BASE_XP_FOR_LEVEL_UP = 250;
@@ -27,6 +28,7 @@ public abstract class BasicHero implements IMapEntity {
     public abstract HeroType getHeroType();
     public abstract int getInitialHP();
     public abstract int getHPBonusPerLevel();
+    public abstract int getLandModifier(SurfaceType surfaceType);
 
     public final int getMaxHP() {
         return getInitialHP() + getLevel() * getHPBonusPerLevel();
