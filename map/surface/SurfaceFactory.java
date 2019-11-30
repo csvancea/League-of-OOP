@@ -1,17 +1,9 @@
 package map.surface;
 
 public final class SurfaceFactory {
-    private static SurfaceFactory instance = null;
     private SurfaceFactory() { }
 
-    public static SurfaceFactory getInstance() {
-        if (instance == null) {
-            instance = new SurfaceFactory();
-        }
-        return instance;
-    }
-
-    public ISurface getSurface(final SurfaceType type) {
+    public static ISurface getSurface(final SurfaceType type) {
         switch (type) {
             case LAND:
                 return new Land();
@@ -20,6 +12,21 @@ public final class SurfaceFactory {
             case DESERT:
                 return new Desert();
             case WOODS:
+                return new Woods();
+            default:
+                return null;
+        }
+    }
+
+    public static ISurface getSurface(final char type) {
+        switch (type) {
+            case 'L':
+                return new Land();
+            case 'V':
+                return new Volcanic();
+            case 'D':
+                return new Desert();
+            case 'W':
                 return new Woods();
             default:
                 return null;

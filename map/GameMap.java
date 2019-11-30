@@ -12,19 +12,19 @@ import map.surface.SurfaceType;
  *   * axa X: coloanele
  *   * axa Y: liniile
  */
-public final class Map {
+public final class GameMap {
     private final ISurface[][] map;
     private final int maxX;
     private final int maxY;
 
-    public Map(final int maxX, final int maxY) {
+    public GameMap(final int maxX, final int maxY) {
         this.map = new ISurface[maxX][maxY];
         this.maxX = maxX;
         this.maxY = maxY;
     }
 
-    public void setType(final int x, final int y, final SurfaceType type) {
-        this.map[x][y] = SurfaceFactory.getInstance().getSurface(type);
+    public void setSurface(final int x, final int y, final SurfaceType surfaceType) {
+        this.map[x][y] = SurfaceFactory.getSurface(surfaceType);
     }
 
     public void setSurface(final int x, final int y, final ISurface surface) {
