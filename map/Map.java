@@ -30,4 +30,8 @@ public final class Map {
     public void setSurface(final int x, final int y, final ISurface surface) {
         this.map[x][y] = surface;
     }
+
+    public ISurface getSurface(final int x, final int y) {
+        return this.map[x][y];
+    }
 }
