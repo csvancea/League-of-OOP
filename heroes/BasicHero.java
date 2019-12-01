@@ -135,9 +135,6 @@ public abstract class BasicHero implements IMapEntity {
     public final void setHP(final int newHP) {
         this.hp = Math.max(0, newHP);
     }
-    public final void increaseHP(final int amount) {
-        setHP(getHP() + amount);
-    }
     public final void decreaseHP(final int amount) {
         setHP(getHP() - amount);
     }
