@@ -5,7 +5,7 @@ import map.surface.SurfaceType;
 public final class Pyromancer extends BasicHero {
     private static final int INITIAL_HP = 500;
     private static final int HP_BONUS_PER_LEVEL = 50;
-    private static final int LAND_MODIFIER = 25;
+    private static final float LAND_MODIFIER = 1.25f;
 
     @Override
     public HeroType getHeroType() {
@@ -23,11 +23,12 @@ public final class Pyromancer extends BasicHero {
     }
 
     @Override
-    public int getLandModifier(final SurfaceType surfaceType) {
+    public float getLandModifier() {
+        SurfaceType surfaceType = getSurface().getSurfaceType();
         if (surfaceType == SurfaceType.VOLCANIC) {
             return LAND_MODIFIER;
         }
-        return 0;
+        return 1.0f;
     }
 
     @Override

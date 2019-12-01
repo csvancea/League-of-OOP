@@ -5,7 +5,7 @@ import map.surface.SurfaceType;
 public final class Wizard extends BasicHero {
     private static final int INITIAL_HP = 400;
     private static final int HP_BONUS_PER_LEVEL = 30;
-    private static final int LAND_MODIFIER = 10;
+    private static final float LAND_MODIFIER = 1.10f;
 
     @Override
     public HeroType getHeroType() {
@@ -23,11 +23,12 @@ public final class Wizard extends BasicHero {
     }
 
     @Override
-    public int getLandModifier(final SurfaceType surfaceType) {
+    public float getLandModifier() {
+        SurfaceType surfaceType = getSurface().getSurfaceType();
         if (surfaceType == SurfaceType.DESERT) {
             return LAND_MODIFIER;
         }
-        return 0;
+        return 1.0f;
     }
 
     @Override

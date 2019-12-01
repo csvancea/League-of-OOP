@@ -28,7 +28,7 @@ public abstract class BasicHero implements IMapEntity {
     public abstract HeroType getHeroType();
     public abstract int getInitialHP();
     public abstract int getHPBonusPerLevel();
-    public abstract int getLandModifier(SurfaceType surfaceType);
+    public abstract float getLandModifier();
 
     public final int getMaxHP() {
         return getInitialHP() + getLevel() * getHPBonusPerLevel();
