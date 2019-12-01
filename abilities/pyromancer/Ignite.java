@@ -25,10 +25,10 @@ public final class Ignite implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
-        float damage = computeDamageWithoutModifiers();
-        damage *= heroModifier * getAttacker().getLandModifier();
+        float modifiers = heroModifier * getAttacker().getLandModifier();
+        float damage = computeDamageWithoutModifiers() * modifiers;
+        float passiveDamage = (50 + getAttacker().getLevel() * 30) * modifiers;
 
-        float passiveDamage = 50 + getAttacker().getLevel() * 30;
         attacked.setPassivePenalty(getAttacker(), new IPassive() {
             private int r = 2;
             private int d = Math.round(passiveDamage);
