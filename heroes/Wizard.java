@@ -1,12 +1,20 @@
 package heroes;
 
 import abilities.IAbility;
+import abilities.wizard.Drain;
+import abilities.wizard.Deflect;
 import map.surface.SurfaceType;
 
 public final class Wizard extends BasicHero {
     private static final int INITIAL_HP = 400;
     private static final int HP_BONUS_PER_LEVEL = 30;
     private static final float LAND_MODIFIER = 1.10f;
+
+    public Wizard() {
+        super();
+        getAbilities().add(new Drain(this));
+        getAbilities().add(new Deflect(this));
+    }
 
     @Override
     public HeroType getHeroType() {
