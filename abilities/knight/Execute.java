@@ -11,6 +11,16 @@ public final class Execute implements IAbility {
     private static final int BASE_DAMAGE = 200;
     private static final int DAMAGE_MULTIPLIER = 30;
 
+    private static final float KNIGHT_MODIFIER = 1.00f;
+    private static final float PYROMANCER_MODIFIER = 1.10f;
+    private static final float ROGUE_MODIFIER = 1.15f;
+    private static final float WIZARD_MODIFIER = 0.80f;
+
+    private static final int INSTANTKILL_BASE = 20;
+    private static final int INSTANTKILL_MULTIPLIER = 1;
+    private static final int INSTANTKILL_MAX = 40;
+    private static final float PERCENT = 1.00f / 100.00f;
+
     private BasicHero attacker;
 
     public Execute(final BasicHero attacker) {
@@ -24,7 +34,9 @@ public final class Execute implements IAbility {
     }
 
     private boolean isInstantKillAvailable(final BasicHero attacked) {
-        float percent = Math.max(40.0f, 20.0f + getAttacker().getLevel()) / 100.0f;
+        float percent = INSTANTKILL_BASE + INSTANTKILL_MULTIPLIER * getAttacker().getLevel();
+        percent = Math.min(percent, INSTANTKILL_MAX) * PERCENT;
+
         return (attacked.getHP() <= percent * attacked.getMaxHP());
     }
 
@@ -37,8 +49,6 @@ public final class Execute implements IAbility {
             damage = computeDamageWithoutModifiers();
             damage *= heroModifier * getAttacker().getLandModifier();
         }
-
-        // TODO: instakill cum se comporta in combinatie cu Deflect?
 
         attacked.increaseDamageTaken(Math.round(damage));
     }
@@ -65,22 +75,22 @@ public final class Execute implements IAbility {
 
     @Override
     public float getHeroModifier(final Knight attacked) {
-        return 1.0f;
+        return KNIGHT_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Pyromancer attacked) {
-        return 1.10f;
+        return PYROMANCER_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Rogue attacked) {
-        return 1.15f;
+        return ROGUE_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Wizard attacked) {
-        return 0.80f;
+        return WIZARD_MODIFIER;
     }
 
     @Override

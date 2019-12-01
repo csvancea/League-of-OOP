@@ -12,6 +12,15 @@ public final class Ignite implements IAbility {
     private static final int BASE_DAMAGE = 150;
     private static final int DAMAGE_MULTIPLIER = 20;
 
+    private static final float KNIGHT_MODIFIER = 1.20f;
+    private static final float PYROMANCER_MODIFIER = 0.90f;
+    private static final float ROGUE_MODIFIER = 0.80f;
+    private static final float WIZARD_MODIFIER = 1.05f;
+
+    private static final int PASSIVE_PENALTY_ROUNDS = 2;
+    private static final int PASSIVE_PENALTY_BASE_DAMAGE = 50;
+    private static final int PASSIVE_PENALTY_MULTIPLIER = 30;
+
     private BasicHero attacker;
 
     public Ignite(final BasicHero attacker) {
@@ -27,15 +36,16 @@ public final class Ignite implements IAbility {
     private void apply(final BasicHero attacked, final float heroModifier) {
         float modifiers = heroModifier * getAttacker().getLandModifier();
         float damage = computeDamageWithoutModifiers() * modifiers;
-        float passiveDamage = (50 + getAttacker().getLevel() * 30) * modifiers;
+        float passiveDamage = (PASSIVE_PENALTY_BASE_DAMAGE
+                + getAttacker().getLevel() * PASSIVE_PENALTY_MULTIPLIER) * modifiers;
 
         attacked.setPassivePenalty(getAttacker(), new IPassive() {
-            private int r = 2;
-            private int d = Math.round(passiveDamage);
+            private int r = PASSIVE_PENALTY_ROUNDS;
+            private int dmg = Math.round(passiveDamage);
             @Override
             public void apply(final BasicHero attacked) {
                 if (r-- > 0) {
-                    attacked.decreaseHP(d); // DoT
+                    attacked.decreaseHP(dmg); // DoT
                 }
             }
         });
@@ -65,22 +75,22 @@ public final class Ignite implements IAbility {
 
     @Override
     public float getHeroModifier(final Knight attacked) {
-        return 1.20f;
+        return KNIGHT_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Pyromancer attacked) {
-        return 0.90f;
+        return PYROMANCER_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Rogue attacked) {
-        return 0.80f;
+        return ROGUE_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Wizard attacked) {
-        return 1.05f;
+        return WIZARD_MODIFIER;
     }
 
     @Override

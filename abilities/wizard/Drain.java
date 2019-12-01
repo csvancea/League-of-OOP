@@ -11,6 +11,14 @@ public final class Drain implements IAbility {
     private static final int BASE_PERCENT = 20;
     private static final int PERCENT_MULTIPLIER = 5;
 
+    private static final float KNIGHT_MODIFIER = 1.20f;
+    private static final float PYROMANCER_MODIFIER = 0.90f;
+    private static final float ROGUE_MODIFIER = 0.80f;
+    private static final float WIZARD_MODIFIER = 1.05f;
+
+    private static final float MAX_HP_MODIFIER = 0.30f;
+    private static final float PERCENT = 1.00f / 100.00f;
+
     private BasicHero attacker;
 
     public Drain(final BasicHero attacker) {
@@ -19,14 +27,14 @@ public final class Drain implements IAbility {
 
     @Override
     public float computeDamageWithoutModifiers() {
-        return 0.0f;
+        return 0.00f;
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
-        float percent = (float) (BASE_PERCENT + getAttacker().getLevel() * PERCENT_MULTIPLIER) / 100.f;
+        float percent = (BASE_PERCENT + getAttacker().getLevel() * PERCENT_MULTIPLIER) * PERCENT;
         percent *= heroModifier * getAttacker().getLandModifier();
 
-        float baseHP = Math.min(0.3f * attacked.getMaxHP(), attacked.getHP());
+        float baseHP = Math.min(MAX_HP_MODIFIER * attacked.getMaxHP(), attacked.getHP());
         float damage = percent * baseHP;
 
         attacked.increaseDamageTaken(Math.round(damage));
@@ -54,22 +62,22 @@ public final class Drain implements IAbility {
 
     @Override
     public float getHeroModifier(final Knight attacked) {
-        return 1.20f;
+        return KNIGHT_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Pyromancer attacked) {
-        return 0.90f;
+        return PYROMANCER_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Rogue attacked) {
-        return 0.80f;
+        return ROGUE_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Wizard attacked) {
-        return 1.05f;
+        return WIZARD_MODIFIER;
     }
 
     @Override

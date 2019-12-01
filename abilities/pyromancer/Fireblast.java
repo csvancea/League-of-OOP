@@ -11,6 +11,11 @@ public final class Fireblast implements IAbility {
     private static final int BASE_DAMAGE = 350;
     private static final int DAMAGE_MULTIPLIER = 50;
 
+    private static final float KNIGHT_MODIFIER = 1.20f;
+    private static final float PYROMANCER_MODIFIER = 0.90f;
+    private static final float ROGUE_MODIFIER = 0.80f;
+    private static final float WIZARD_MODIFIER = 1.05f;
+
     private BasicHero attacker;
 
     public Fireblast(final BasicHero attacker) {
@@ -52,22 +57,22 @@ public final class Fireblast implements IAbility {
 
     @Override
     public float getHeroModifier(final Knight attacked) {
-        return 1.20f;
+        return KNIGHT_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Pyromancer attacked) {
-        return 0.90f;
+        return PYROMANCER_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Rogue attacked) {
-        return 0.80f;
+        return ROGUE_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Wizard attacked) {
-        return 1.05f;
+        return WIZARD_MODIFIER;
     }
 
     @Override

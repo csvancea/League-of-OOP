@@ -12,6 +12,8 @@ import java.util.ArrayList;
 public abstract class BasicHero implements IMapEntity {
     private static final int BASE_XP_FOR_LEVEL_UP = 250;
     private static final int MULTIPLIER_FOR_LEVEL_UP = 50;
+    private static final int BASE_XP_FOR_BONUS_KILL = 200;
+    private static final int MULTIPLIER_FOR_BONUS_KILL = 40;
 
     private int x, y;
     private int xp;
@@ -43,7 +45,8 @@ public abstract class BasicHero implements IMapEntity {
         if (isDead()) {
             ret = String.format("%c dead", getHeroType().toString().charAt(0));
         } else {
-            ret = String.format("%c %d %d %d %d %d", getHeroType().toString().charAt(0), getLevel(), getXP(), getHP(), y, x);
+            char heroChar = getHeroType().toString().charAt(0);
+            ret = String.format("%c %d %d %d %d %d", heroChar, getLevel(), getXP(), getHP(), y, x);
         }
         return ret;
     }
@@ -124,7 +127,7 @@ public abstract class BasicHero implements IMapEntity {
     public final void increaseLevel() {
         setLevel(getLevel() + 1);
     }
-    public final void levelUp () {
+    public final void levelUp() {
         while (getXP() >= BASE_XP_FOR_LEVEL_UP + getLevel() * MULTIPLIER_FOR_LEVEL_UP) {
             increaseLevel();
         }
@@ -140,7 +143,10 @@ public abstract class BasicHero implements IMapEntity {
         setHP(getHP() - amount);
     }
     public final void onKill(final BasicHero attacked) {
-        int bonusXP = Math.max(0, 200 - (getLevel() - attacked.getLevel()) * 40);
+        int levelDiff = getLevel() - attacked.getLevel();
+        int bonusXP = BASE_XP_FOR_BONUS_KILL - levelDiff * MULTIPLIER_FOR_BONUS_KILL;
+        bonusXP = Math.max(0, bonusXP);
+
         increaseXP(bonusXP);
     }
 

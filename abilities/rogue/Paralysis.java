@@ -13,6 +13,14 @@ public final class Paralysis implements IAbility {
     private static final int BASE_DAMAGE = 40;
     private static final int DAMAGE_MULTIPLIER = 10;
 
+    private static final float KNIGHT_MODIFIER = 0.80f;
+    private static final float PYROMANCER_MODIFIER = 1.20f;
+    private static final float ROGUE_MODIFIER = 0.90f;
+    private static final float WIZARD_MODIFIER = 1.25f;
+
+    private static final int PASSIVE_PENALTY_MIN_ROUNDS = 3;
+    private static final int PASSIVE_PENALTY_MAX_ROUNDS = 6;
+
     private BasicHero attacker;
 
     public Paralysis(final BasicHero attacker) {
@@ -31,9 +39,9 @@ public final class Paralysis implements IAbility {
 
         int numRounds;
         if (attacked.getSurface().getSurfaceType() == SurfaceType.WOODS) {
-            numRounds = 6;
+            numRounds = PASSIVE_PENALTY_MAX_ROUNDS;
         } else {
-            numRounds = 3;
+            numRounds = PASSIVE_PENALTY_MIN_ROUNDS;
         }
 
         float finalDamage = damage;
@@ -76,22 +84,22 @@ public final class Paralysis implements IAbility {
 
     @Override
     public float getHeroModifier(final Knight attacked) {
-        return 0.80f;
+        return KNIGHT_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Pyromancer attacked) {
-        return 1.20f;
+        return PYROMANCER_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Rogue attacked) {
-        return 0.90f;
+        return ROGUE_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Wizard attacked) {
-        return 1.25f;
+        return WIZARD_MODIFIER;
     }
 
 

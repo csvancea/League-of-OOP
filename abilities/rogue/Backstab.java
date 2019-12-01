@@ -12,6 +12,14 @@ public final class Backstab implements IAbility {
     private static final int BASE_DAMAGE = 200;
     private static final int DAMAGE_MULTIPLIER = 20;
 
+    private static final float KNIGHT_MODIFIER = 0.90f;
+    private static final float PYROMANCER_MODIFIER = 1.25f;
+    private static final float ROGUE_MODIFIER = 1.20f;
+    private static final float WIZARD_MODIFIER = 1.25f;
+
+    private static final int SPECIAL_HIT_EACH_X_ROUNDS = 3;
+    private static final float SPECIAL_HIT_MODIFIER = 1.50f;
+
     private BasicHero attacker;
     private int hitCount;
     private int hitCountThisTurn;
@@ -25,8 +33,9 @@ public final class Backstab implements IAbility {
     @Override
     public float computeDamageWithoutModifiers() {
         float damage = computeDamageWithLevelMultiplier();
-        if (hitCount % 3 == 0 && getAttacker().getSurface().getSurfaceType() == SurfaceType.WOODS) {
-            damage *= 1.5f;
+        if (hitCount % SPECIAL_HIT_EACH_X_ROUNDS == 0
+                && getAttacker().getSurface().getSurfaceType() == SurfaceType.WOODS) {
+            damage *= SPECIAL_HIT_MODIFIER;
         }
 
         return damage;
@@ -62,22 +71,22 @@ public final class Backstab implements IAbility {
 
     @Override
     public float getHeroModifier(final Knight attacked) {
-        return 0.9f;
+        return KNIGHT_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Pyromancer attacked) {
-        return 1.25f;
+        return PYROMANCER_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Rogue attacked) {
-        return 1.20f;
+        return ROGUE_MODIFIER;
     }
 
     @Override
     public float getHeroModifier(final Wizard attacked) {
-        return 1.25f;
+        return WIZARD_MODIFIER;
     }
 
     @Override
