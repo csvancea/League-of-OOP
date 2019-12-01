@@ -24,7 +24,15 @@ public abstract class BasicHero implements IMapEntity {
     }
 
     @Override
-    public abstract String toString();
+    public final String toString() {
+        String ret;
+        if (isDead()) {
+            ret = String.format("%c dead", getHeroType().toString().charAt(0));
+        } else {
+            ret = String.format("%c %d %d %d %d %d", getHeroType().toString().charAt(0), getLevel(), getXP(), getHP(), y, x);
+        }
+        return ret;
+    }
     public abstract HeroType getHeroType();
     public abstract int getInitialHP();
     public abstract int getHPBonusPerLevel();

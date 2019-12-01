@@ -30,9 +30,4 @@ public final class Wizard extends BasicHero {
         }
         return 1.0f;
     }
-
-    @Override
-    public String toString() {
-        return "W";
-    }
 }
