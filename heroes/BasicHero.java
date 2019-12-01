@@ -50,24 +50,66 @@ public abstract class BasicHero implements IMapEntity {
         }
         return ret;
     }
+
+    /**
+     * Returneaza tipul eroului.
+     * @return HeroType
+     */
     public abstract HeroType getHeroType();
+
+    /**
+     * Returneaza Base HP pentru jucator.
+     * @return Base HP
+     */
     public abstract int getInitialHP();
+
+    /**
+     * Returneaza bonusul de HP per nivel. (multiplicativ)
+     * @return bonus HP
+     */
     public abstract int getHPBonusPerLevel();
+
+    /**
+     * Returneaza *land modifier*-ul in functie de suprafata pe care se afla eroul la momentul
+     * apelarii metodei.
+     * @return *land modifier*
+     */
     public abstract float getLandModifier();
+
+    /**
+     * Accepta efectul unei abilitati. Implementare double-dispatch.
+     * @param ability abilitatea ce se va aplica asupra eroului this
+     */
     public abstract void acceptAbility(IAbility ability);
 
+    /**
+     * Returneaza viata maxima ce o poate avea eroul in functie de nivelul curent.
+     * @return max HP
+     */
     public final int getMaxHP() {
         return getInitialHP() + getLevel() * getHPBonusPerLevel();
     }
+
+    /**
+     * Verifica daca eroul este mort.
+     * @return True daca este mort, altfel False
+     */
     public final boolean isDead() {
         return getHP() == 0;
     }
 
+    /**
+     * Returneaza tipul de MapEntity. Necesara pentru a putea fi plasat pe harta.
+     * @return HERO
+     */
     @Override
     public final MapEntityType getMapEntityType() {
         return MapEntityType.HERO;
     }
 
+    /**
+     * Metode de deplasare.
+     */
     public final void goUp() {
         setPosition(getX(), getY() - 1);
     }
@@ -142,6 +184,11 @@ public abstract class BasicHero implements IMapEntity {
     public final void decreaseHP(final int amount) {
         setHP(getHP() - amount);
     }
+
+    /**
+     * Apelata dupa efectuarea unui kill.
+     * @param attacked eroul omorat
+     */
     public final void onKill(final BasicHero attacked) {
         int levelDiff = getLevel() - attacked.getLevel();
         int bonusXP = BASE_XP_FOR_BONUS_KILL - levelDiff * MULTIPLIER_FOR_BONUS_KILL;
@@ -150,15 +197,33 @@ public abstract class BasicHero implements IMapEntity {
         increaseXP(bonusXP);
     }
 
+    /**
+     * Returneaza damage-ul luat (dar inca neaplicat) in runda curenta.
+     * @return damage
+     */
     public final int getDamageTaken() {
         return damageTaken;
     }
+
+    /**
+     * Seteaza damage-ul ce va fi luat la sfarsitul rundei curente.
+     * @param damage
+     */
     public final void setDamageTaken(final int damage) {
         this.damageTaken = damage;
     }
+
+    /**
+     * Creste damage-ul ce va fi luat la sfarsitul rundei curente.
+     * @param amount cu cat creste
+     */
     public final void increaseDamageTaken(final int amount) {
         setDamageTaken(getDamageTaken() + amount);
     }
+
+    /**
+     * Aplica damage-ul acumulat in runda curenta si reseteaza contorul.
+     */
     public final void applyDamageTaken() {
         decreaseHP(getDamageTaken());
         setDamageTaken(0);
@@ -179,23 +244,48 @@ public abstract class BasicHero implements IMapEntity {
         return abilities;
     }
 
+    /**
+     * Seteaza o actiune pasiva va afecta eroul permanent pana
+     *   * este inlocuita de alta actiune pasiva
+     *   * moare eroul.
+     *
+     * @param attacker eroul care a atacat
+     * @param action actiunea pasiva
+     */
     public final void setPassivePenalty(final BasicHero attacker, final IPassive action) {
         passiveAttacker = attacker;
         passivePenalty = action;
     }
+
+    /**
+     * Aplica actiunea pasiva.
+     */
     public final void applyPassivePenalty() {
         if (passivePenalty != null && !isDead()) {
             passivePenalty.apply(this);
         }
     }
+
+    /**
+     * Returneaza eroul ce a actionat ultima data pasiv.
+     * @return BasicHero
+     */
     public final BasicHero getPassiveAttacker() {
         return passiveAttacker;
     }
 
+    /**
+     * Returneaza ultimul atacator activ.
+     * @return BasicHero
+     */
     public final BasicHero getLastAttacker() {
         return lastAttacker;
     }
 
+    /**
+     * Seteaza ultimul atacator activ.
+     * @param lastAttacker
+     */
     public final void setLastAttacker(final BasicHero lastAttacker) {
         this.lastAttacker = lastAttacker;
     }
