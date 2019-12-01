@@ -178,7 +178,7 @@ public abstract class BasicHero implements IMapEntity {
         passivePenalty = action;
     }
     public final void applyPassivePenalty() {
-        if (passivePenalty != null) {
+        if (passivePenalty != null && !isDead()) {
             passivePenalty.apply(this);
         }
     }
