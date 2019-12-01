@@ -1,9 +1,13 @@
 package heroes;
 
+import abilities.IAbility;
+import abilities.IPassive;
 import map.GameMap;
 import map.entity.IMapEntity;
 import map.entity.MapEntityType;
-import map.surface.SurfaceType;
+import map.surface.ISurface;
+
+import java.util.ArrayList;
 
 public abstract class BasicHero implements IMapEntity {
     private static final int BASE_XP_FOR_LEVEL_UP = 250;
@@ -13,14 +17,24 @@ public abstract class BasicHero implements IMapEntity {
     private int xp;
     private int level;
     private int hp;
+    private int damageTaken;
     private GameMap map;
+    private final ArrayList<IAbility> abilities;
+
+    private BasicHero lastAttacker;
+    private BasicHero passiveAttacker;
+    private IPassive passivePenalty;
 
     public BasicHero() {
+        abilities = new ArrayList<IAbility>();
+
         setMap(null);
         setPosition(-1, -1);
         setXP(0);
         setLevel(0);
         setHP(getMaxHP());
+        setDamageTaken(0);
+        setPassivePenalty(null, null);
     }
 
     @Override
@@ -37,6 +51,7 @@ public abstract class BasicHero implements IMapEntity {
     public abstract int getInitialHP();
     public abstract int getHPBonusPerLevel();
     public abstract float getLandModifier();
+    public abstract void acceptAbility(IAbility ability);
 
     public final int getMaxHP() {
         return getInitialHP() + getLevel() * getHPBonusPerLevel();
@@ -126,11 +141,58 @@ public abstract class BasicHero implements IMapEntity {
     public final void decreaseHP(final int amount) {
         setHP(getHP() - amount);
     }
+    public final void onKill(final BasicHero attacked) {
+        int bonusXP = Math.max(0, 200 - (getLevel() - attacked.getLevel()) * 40);
+        increaseXP(bonusXP);
+    }
+
+    public final int getDamageTaken() {
+        return damageTaken;
+    }
+    public final void setDamageTaken(final int damage) {
+        this.damageTaken = damage;
+    }
+    public final void increaseDamageTaken(final int amount) {
+        setDamageTaken(getDamageTaken() + amount);
+    }
+    public final void applyDamageTaken() {
+        decreaseHP(getDamageTaken());
+        setDamageTaken(0);
+    }
 
     public final GameMap getMap() {
         return map;
     }
     public final void setMap(final GameMap map) {
         this.map = map;
+    }
+
+    public final ISurface getSurface() {
+        return getMap().getSurface(x, y);
+    }
+
+    public final ArrayList<IAbility> getAbilities() {
+        return abilities;
+    }
+
+    public final void setPassivePenalty(final BasicHero attacker, final IPassive action) {
+        passiveAttacker = attacker;
+        passivePenalty = action;
+    }
+    public final void applyPassivePenalty() {
+        if (passivePenalty != null) {
+            passivePenalty.apply(this);
+        }
+    }
+    public final BasicHero getPassiveAttacker() {
+        return passiveAttacker;
+    }
+
+    public final BasicHero getLastAttacker() {
+        return lastAttacker;
+    }
+
+    public final void setLastAttacker(final BasicHero lastAttacker) {
+        this.lastAttacker = lastAttacker;
     }
 }

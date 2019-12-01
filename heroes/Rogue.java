@@ -1,5 +1,6 @@
 package heroes;
 
+import abilities.IAbility;
 import map.surface.SurfaceType;
 
 public final class Rogue extends BasicHero {
@@ -29,5 +30,11 @@ public final class Rogue extends BasicHero {
             return LAND_MODIFIER;
         }
         return 1.0f;
+    }
+
+    @Override
+    public void acceptAbility(final IAbility ability) {
+        ability.apply(this);
+        setLastAttacker(ability.getAttacker());
     }
 }
