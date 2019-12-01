@@ -1,12 +1,20 @@
 package heroes;
 
 import abilities.IAbility;
+import abilities.knight.Execute;
+import abilities.knight.Slam;
 import map.surface.SurfaceType;
 
 public final class Knight extends BasicHero {
     private static final int INITIAL_HP = 900;
     private static final int HP_BONUS_PER_LEVEL = 80;
     private static final float LAND_MODIFIER = 1.15f;
+
+    public Knight() {
+        super();
+        getAbilities().add(new Execute(this));
+        getAbilities().add(new Slam(this));
+    }
 
     @Override
     public HeroType getHeroType() {
