@@ -1,12 +1,20 @@
 package heroes;
 
 import abilities.IAbility;
+import abilities.pyromancer.Fireblast;
+import abilities.pyromancer.Ignite;
 import map.surface.SurfaceType;
 
 public final class Pyromancer extends BasicHero {
     private static final int INITIAL_HP = 500;
     private static final int HP_BONUS_PER_LEVEL = 50;
     private static final float LAND_MODIFIER = 1.25f;
+
+    public Pyromancer() {
+        super();
+        getAbilities().add(new Fireblast(this));
+        getAbilities().add(new Ignite(this));
+    }
 
     @Override
     public HeroType getHeroType() {
