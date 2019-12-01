@@ -48,6 +48,14 @@ public final class GameMap {
         return this.map[x][y].getEntities();
     }
 
+    public int getMaxX() {
+        return maxX;
+    }
+
+    public int getMaxY() {
+        return maxY;
+    }
+
     private static final class Cell {
         private ISurface surface;
         private final ArrayList<IMapEntity> entities;
