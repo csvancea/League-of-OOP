@@ -38,7 +38,7 @@ public final class HeroObserver implements PropertyChangeListener {
                 }
                 break;
             case "revive":
-                message = String.format("Player %s brought to life by an angel", hero);
+                message = String.format("Player %s was brought to life by an angel", hero);
                 break;
             case "setLevel":
                 int newLevel = (Integer) pce.getNewValue();
