@@ -30,6 +30,8 @@ public abstract class BasicHero implements IMapEntity {
 
     private boolean isStunned;
 
+    private float additiveModifier;
+
     public BasicHero() {
         abilities = new ArrayList<IAbility>();
 
@@ -40,6 +42,7 @@ public abstract class BasicHero implements IMapEntity {
         setHP(getMaxHP());
         setDamageTaken(0);
         setPassivePenalty(0, null, null);
+        setAdditiveModifier(0.0f);
     }
 
     @Override
@@ -319,5 +322,36 @@ public abstract class BasicHero implements IMapEntity {
      */
     public final void setLastAttacker(final BasicHero lastAttacker) {
         this.lastAttacker = lastAttacker;
+    }
+
+    /**
+     * Seteaza modificatorul aditiv pentru damage.
+     * @param additiveModifier
+     */
+    public final void setAdditiveModifier(final float additiveModifier) {
+        this.additiveModifier = additiveModifier;
+    }
+
+    /**
+     * Returneaza modificatorul aditiv pentru damage.
+     */
+    public final float getAdditiveModifier() {
+        return additiveModifier;
+    }
+
+    /**
+     * Creste modificatorul aditiv pentru damage.
+     * @param amount
+     */
+    public final void increaseAdditiveModifier(final float amount) {
+        setAdditiveModifier(getAdditiveModifier() + amount);
+    }
+
+    /**
+     * Scade modificatorul aditiv pentru damage.
+     * @param amount
+     */
+    public final void decreaseAdditiveModifier(final float amount) {
+        setAdditiveModifier(getAdditiveModifier() - amount);
     }
 }
