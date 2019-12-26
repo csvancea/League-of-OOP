@@ -206,7 +206,7 @@ public abstract class BasicHero implements IEntity {
 
         if (isDead()) {
             IEntity attacker = getLastAttacker();
-            if (attacker.getEntityType() == EntityType.HERO) {
+            if (attacker != null && attacker.getEntityType() == EntityType.HERO) {
                 ((BasicHero) attacker).onKill(this);
             }
 

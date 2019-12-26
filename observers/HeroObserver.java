@@ -23,16 +23,18 @@ public final class HeroObserver implements PropertyChangeListener {
         switch (pce.getPropertyName()) {
             case "death":
                 IEntity attackerEntity = (IEntity) pce.getNewValue();
-                switch (attackerEntity.getEntityType()) {
-                    case HERO:
-                        BasicHero attackerHero = (BasicHero) attackerEntity;
-                        message = String.format("Player %s was killed by %s", hero, attackerHero);
-                        break;
-                    case ANGEL:
-                        message = String.format("Player %s was killed by an angel", hero);
-                        break;
-                    default:
-                        break;
+                if (attackerEntity != null) {
+                    switch (attackerEntity.getEntityType()) {
+                        case HERO:
+                            BasicHero attackerHero = (BasicHero) attackerEntity;
+                            message = String.format("Player %s was killed by %s", hero, attackerHero);
+                            break;
+                        case ANGEL:
+                            message = String.format("Player %s was killed by an angel", hero);
+                            break;
+                        default:
+                            break;
+                    }
                 }
                 break;
             case "revive":
