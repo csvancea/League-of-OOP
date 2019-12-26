@@ -2,7 +2,7 @@ package main;
 
 import fileio.implementations.FileReader;
 import fileio.implementations.FileWriter;
-import heroes.BasicHero;
+import entities.heroes.BasicHero;
 
 public final class Main {
     private Main() { }

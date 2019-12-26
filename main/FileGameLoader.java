@@ -1,10 +1,10 @@
 package main;
 
-import angels.AngelFactory;
-import angels.BasicAngel;
+import entities.angels.AngelFactory;
+import entities.angels.BasicAngel;
 import fileio.implementations.FileReader;
-import heroes.BasicHero;
-import heroes.HeroFactory;
+import entities.heroes.BasicHero;
+import entities.heroes.HeroFactory;
 import map.GameMap;
 import map.surface.SurfaceFactory;
 

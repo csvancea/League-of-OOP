@@ -1,8 +1,8 @@
-package angels;
+package entities.angels;
 
-import angels.good.LevelUpAngel;
-import angels.good.DamageAngel;
-import angels.good.LifeGiver;
+import entities.angels.good.LevelUpAngel;
+import entities.angels.good.DamageAngel;
+import entities.angels.good.LifeGiver;
 import map.GameMap;
 
 public final class AngelFactory {

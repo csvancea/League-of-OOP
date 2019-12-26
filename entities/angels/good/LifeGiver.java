@@ -1,12 +1,12 @@
-package angels.good;
+package entities.angels.good;
 
-import angels.AngelType;
-import angels.BasicAngel;
-import heroes.BasicHero;
-import heroes.Knight;
-import heroes.Pyromancer;
-import heroes.Rogue;
-import heroes.Wizard;
+import entities.angels.AngelType;
+import entities.angels.BasicAngel;
+import entities.heroes.BasicHero;
+import entities.heroes.Knight;
+import entities.heroes.Pyromancer;
+import entities.heroes.Rogue;
+import entities.heroes.Wizard;
 import map.GameMap;
 
 public final class LifeGiver extends BasicAngel {
@@ -25,6 +25,7 @@ public final class LifeGiver extends BasicAngel {
     private void apply(final BasicHero receiver, final int angelHP) {
         if (!receiver.isDead()) {
             receiver.increaseHP(angelHP);
+            support.firePropertyChange("interact", null, receiver);
         }
     }
 

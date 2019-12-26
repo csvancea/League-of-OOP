@@ -1,21 +1,22 @@
-package heroes;
+package entities.heroes;
 
 import abilities.IAbility;
 import abilities.IPassive;
-import angels.BasicAngel;
+import entities.angels.BasicAngel;
 import map.GameMap;
-import map.entity.IMapEntity;
-import map.entity.MapEntityType;
+import entities.IEntity;
+import entities.EntityType;
 import map.surface.ISurface;
 
 import java.util.ArrayList;
 
-public abstract class BasicHero implements IMapEntity {
+public abstract class BasicHero implements IEntity {
     private static final int BASE_XP_FOR_LEVEL_UP = 250;
     private static final int MULTIPLIER_FOR_LEVEL_UP = 50;
     private static final int BASE_XP_FOR_BONUS_KILL = 200;
     private static final int MULTIPLIER_FOR_BONUS_KILL = 40;
 
+    private int id;
     private int x, y;
     private int xp;
     private int level;
@@ -24,12 +25,11 @@ public abstract class BasicHero implements IMapEntity {
     private GameMap map;
     private final ArrayList<IAbility> abilities;
 
-    private BasicHero lastAttacker;
+    private IEntity lastAttacker;
     private int passiveNumRounds;
     private IPassive passivePenalty;
     private IPassive passivePenaltyFinish;
     private boolean passiveJustEnded;
-
     private boolean isStunned;
 
     private float additiveModifier;
@@ -37,6 +37,7 @@ public abstract class BasicHero implements IMapEntity {
     public BasicHero() {
         abilities = new ArrayList<IAbility>();
 
+        setId(0);
         setMap(null);
         setPosition(-1, -1);
         setXP(0);
@@ -112,8 +113,8 @@ public abstract class BasicHero implements IMapEntity {
      * @return HERO
      */
     @Override
-    public final MapEntityType getMapEntityType() {
-        return MapEntityType.HERO;
+    public final EntityType getEntityType() {
+        return EntityType.HERO;
     }
 
     /**
@@ -153,6 +154,14 @@ public abstract class BasicHero implements IMapEntity {
 
         this.x = newX;
         this.y = newY;
+    }
+
+    public final void setId(final int id) {
+        this.id = id;
+    }
+
+    public final int getId() {
+        return id;
     }
 
     public final int getXP() {
@@ -322,7 +331,7 @@ public abstract class BasicHero implements IMapEntity {
      * Returneaza ultimul atacator activ.
      * @return BasicHero
      */
-    public final BasicHero getLastAttacker() {
+    public final IEntity getLastAttacker() {
         return lastAttacker;
     }
 
@@ -330,7 +339,7 @@ public abstract class BasicHero implements IMapEntity {
      * Seteaza ultimul atacator activ.
      * @param lastAttacker
      */
-    public final void setLastAttacker(final BasicHero lastAttacker) {
+    public final void setLastAttacker(final IEntity lastAttacker) {
         this.lastAttacker = lastAttacker;
     }
 

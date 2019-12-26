@@ -1,25 +1,25 @@
-package heroes;
+package entities.heroes;
 
 import abilities.IAbility;
-import abilities.pyromancer.Fireblast;
-import abilities.pyromancer.Ignite;
-import angels.BasicAngel;
+import abilities.rogue.Backstab;
+import abilities.rogue.Paralysis;
+import entities.angels.BasicAngel;
 import map.surface.SurfaceType;
 
-public final class Pyromancer extends BasicHero {
-    private static final int INITIAL_HP = 500;
-    private static final int HP_BONUS_PER_LEVEL = 50;
-    private static final float LAND_MODIFIER = 1.25f;
+public final class Rogue extends BasicHero {
+    private static final int INITIAL_HP = 600;
+    private static final int HP_BONUS_PER_LEVEL = 40;
+    private static final float LAND_MODIFIER = 1.15f;
 
-    public Pyromancer() {
+    public Rogue() {
         super();
-        getAbilities().add(new Fireblast(this));
-        getAbilities().add(new Ignite(this));
+        getAbilities().add(new Backstab(this));
+        getAbilities().add(new Paralysis(this));
     }
 
     @Override
     public HeroType getHeroType() {
-        return HeroType.PYROMANCER;
+        return HeroType.ROGUE;
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class Pyromancer extends BasicHero {
     @Override
     public float getLandModifier() {
         SurfaceType surfaceType = getSurface().getSurfaceType();
-        if (surfaceType == SurfaceType.VOLCANIC) {
+        if (surfaceType == SurfaceType.WOODS) {
             return LAND_MODIFIER;
         }
         return 1.0f;

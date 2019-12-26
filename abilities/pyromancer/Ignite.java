@@ -2,11 +2,11 @@ package abilities.pyromancer;
 
 import abilities.IAbility;
 import abilities.IPassive;
-import heroes.BasicHero;
-import heroes.Knight;
-import heroes.Pyromancer;
-import heroes.Rogue;
-import heroes.Wizard;
+import entities.heroes.BasicHero;
+import entities.heroes.Knight;
+import entities.heroes.Pyromancer;
+import entities.heroes.Rogue;
+import entities.heroes.Wizard;
 
 public final class Ignite implements IAbility {
     private static final int BASE_DAMAGE = 150;

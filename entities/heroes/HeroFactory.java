@@ -1,4 +1,4 @@
-package heroes;
+package entities.heroes;
 
 public final class HeroFactory {
     private HeroFactory() { }

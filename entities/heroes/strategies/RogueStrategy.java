@@ -1,6 +1,6 @@
-package heroes.strategies;
+package entities.heroes.strategies;
 
-import heroes.BasicHero;
+import entities.heroes.BasicHero;
 
 public final class RogueStrategy extends BasicStrategy {
     private static final float UPPER_LIMIT_MAXHP_MULTIPLIER = 1.00f / 5.00f;

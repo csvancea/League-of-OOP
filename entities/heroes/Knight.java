@@ -1,25 +1,25 @@
-package heroes;
+package entities.heroes;
 
 import abilities.IAbility;
-import abilities.rogue.Backstab;
-import abilities.rogue.Paralysis;
-import angels.BasicAngel;
+import abilities.knight.Execute;
+import abilities.knight.Slam;
+import entities.angels.BasicAngel;
 import map.surface.SurfaceType;
 
-public final class Rogue extends BasicHero {
-    private static final int INITIAL_HP = 600;
-    private static final int HP_BONUS_PER_LEVEL = 40;
+public final class Knight extends BasicHero {
+    private static final int INITIAL_HP = 900;
+    private static final int HP_BONUS_PER_LEVEL = 80;
     private static final float LAND_MODIFIER = 1.15f;
 
-    public Rogue() {
+    public Knight() {
         super();
-        getAbilities().add(new Backstab(this));
-        getAbilities().add(new Paralysis(this));
+        getAbilities().add(new Execute(this));
+        getAbilities().add(new Slam(this));
     }
 
     @Override
     public HeroType getHeroType() {
-        return HeroType.ROGUE;
+        return HeroType.KNIGHT;
     }
 
     @Override
@@ -35,7 +35,7 @@ public final class Rogue extends BasicHero {
     @Override
     public float getLandModifier() {
         SurfaceType surfaceType = getSurface().getSurfaceType();
-        if (surfaceType == SurfaceType.WOODS) {
+        if (surfaceType == SurfaceType.LAND) {
             return LAND_MODIFIER;
         }
         return 1.0f;

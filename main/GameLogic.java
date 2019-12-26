@@ -1,13 +1,13 @@
 package main;
 
 import abilities.IAbility;
-import angels.BasicAngel;
-import heroes.BasicHero;
-import heroes.strategies.BasicStrategy;
-import heroes.strategies.StrategyFactory;
+import entities.angels.BasicAngel;
+import entities.heroes.BasicHero;
+import entities.heroes.strategies.BasicStrategy;
+import entities.heroes.strategies.StrategyFactory;
 import map.GameMap;
-import map.entity.IMapEntity;
-import map.entity.MapEntityType;
+import entities.IEntity;
+import entities.EntityType;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -57,8 +57,8 @@ public final class GameLogic {
 
     private void attackEachOthers(final List<BasicHero> aliveHeroes) {
         for (BasicHero attacker : aliveHeroes) {
-            for (IMapEntity otherEntity : gameMap.getEntities(attacker.getX(), attacker.getY())) {
-                if (otherEntity.getMapEntityType() == MapEntityType.HERO) {
+            for (IEntity otherEntity : gameMap.getEntities(attacker.getX(), attacker.getY())) {
+                if (otherEntity.getEntityType() == EntityType.HERO) {
                     if (otherEntity != attacker) {
                         for (IAbility ability : attacker.getAbilities()) {
                             ability.nextTurn();
@@ -91,8 +91,8 @@ public final class GameLogic {
         for (BasicAngel angel : roundAngels.get(roundIdx)) {
             // TODO: notify
 
-            for (IMapEntity otherEntity : gameMap.getEntities(angel.getX(), angel.getY())) {
-                if (otherEntity.getMapEntityType() == MapEntityType.HERO) {
+            for (IEntity otherEntity : gameMap.getEntities(angel.getX(), angel.getY())) {
+                if (otherEntity.getEntityType() == EntityType.HERO) {
                     ((BasicHero) otherEntity).acceptAngel(angel);
                 }
             }

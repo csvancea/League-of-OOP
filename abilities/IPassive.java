@@ -1,6 +1,6 @@
 package abilities;
 
-import heroes.BasicHero;
+import entities.heroes.BasicHero;
 
 /**
  * Pentru a aplica o abilitate pasiva, se suprascrie `apply` cu o metoda ce aplica efectul

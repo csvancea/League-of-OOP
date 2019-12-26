@@ -1,4 +1,4 @@
-package heroes;
+package entities.heroes;
 
 public enum HeroType {
     KNIGHT,

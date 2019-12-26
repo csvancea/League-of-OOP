@@ -1,6 +1,6 @@
-package heroes.strategies;
+package entities.heroes.strategies;
 
-import heroes.BasicHero;
+import entities.heroes.BasicHero;
 
 public final class StrategyFactory {
     private StrategyFactory() { }

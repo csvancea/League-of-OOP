@@ -1,30 +1,37 @@
-package angels;
+package entities.angels;
 
-import heroes.Knight;
-import heroes.Pyromancer;
-import heroes.Rogue;
-import heroes.Wizard;
+import entities.heroes.Knight;
+import entities.heroes.Pyromancer;
+import entities.heroes.Rogue;
+import entities.heroes.Wizard;
 import map.GameMap;
-import map.entity.IMapEntity;
-import map.entity.MapEntityType;
+import entities.IEntity;
+import entities.EntityType;
 
-public abstract class BasicAngel implements IMapEntity {
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
+
+public abstract class BasicAngel implements IEntity {
     private final int x, y;
     private final GameMap map;
     protected String name;
     protected AngelType type;
+    private boolean active;
+    protected final PropertyChangeSupport support;
 
     public BasicAngel(final int x, final int y, final GameMap map) {
         this.x = x;
         this.y = y;
         this.map = map;
+        this.support = new PropertyChangeSupport(this);
 
+        setActive(false);
         map.getEntities(x, y).add(this);
     }
 
     @Override
-    public final MapEntityType getMapEntityType() {
-        return MapEntityType.ANGEL;
+    public final EntityType getEntityType() {
+        return EntityType.ANGEL;
     }
 
     public final String getName() {
@@ -52,6 +59,23 @@ public abstract class BasicAngel implements IMapEntity {
 
     public final int getY() {
         return y;
+    }
+
+    public final void setActive(final boolean active) {
+        support.firePropertyChange("active", this.active, active);
+        this.active = active;
+    }
+
+    public final boolean isActive() {
+        return active;
+    }
+
+    public final void addPropertyChangeListener(final PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    public final void removePropertyChangeListener(final PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
     }
 
     /**

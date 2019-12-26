@@ -1,7 +1,7 @@
 package main;
 
-import angels.BasicAngel;
-import heroes.BasicHero;
+import entities.angels.BasicAngel;
+import entities.heroes.BasicHero;
 import map.GameMap;
 
 import java.util.List;

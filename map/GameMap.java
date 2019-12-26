@@ -1,6 +1,6 @@
 package map;
 
-import map.entity.IMapEntity;
+import entities.IEntity;
 import map.surface.ISurface;
 import map.surface.SurfaceFactory;
 import map.surface.SurfaceType;
@@ -55,7 +55,7 @@ public final class GameMap {
         return this.map[x][y].getSurface();
     }
 
-    public ArrayList<IMapEntity> getEntities(final int x, final int y) {
+    public ArrayList<IEntity> getEntities(final int x, final int y) {
         return this.map[x][y].getEntities();
     }
 
@@ -69,10 +69,10 @@ public final class GameMap {
 
     private static final class Cell {
         private ISurface surface;
-        private final ArrayList<IMapEntity> entities;
+        private final ArrayList<IEntity> entities;
 
         private Cell() {
-            entities = new ArrayList<IMapEntity>();
+            entities = new ArrayList<IEntity>();
         }
 
         private ISurface getSurface() {
@@ -83,7 +83,7 @@ public final class GameMap {
             this.surface = surface;
         }
 
-        private ArrayList<IMapEntity> getEntities() {
+        private ArrayList<IEntity> getEntities() {
             return entities;
         }
     }

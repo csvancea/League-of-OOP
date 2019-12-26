@@ -1,10 +1,10 @@
 package abilities;
 
-import heroes.BasicHero;
-import heroes.Knight;
-import heroes.Pyromancer;
-import heroes.Rogue;
-import heroes.Wizard;
+import entities.heroes.BasicHero;
+import entities.heroes.Knight;
+import entities.heroes.Pyromancer;
+import entities.heroes.Rogue;
+import entities.heroes.Wizard;
 
 public interface IAbility {
     /**
