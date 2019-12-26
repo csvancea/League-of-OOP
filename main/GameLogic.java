@@ -1,6 +1,7 @@
 package main;
 
 import abilities.IAbility;
+import angels.BasicAngel;
 import heroes.BasicHero;
 import map.GameMap;
 import map.entity.IMapEntity;
@@ -13,11 +14,13 @@ public final class GameLogic {
     private final GameMap gameMap;
     private final List<BasicHero> heroesList;
     private final List<List<Character>> roundMoves;
+    private final List<List<BasicAngel>> roundAngels;
 
     public GameLogic(final IGameLoader gameLoader) {
         gameMap = gameLoader.getGameMap();
         heroesList = gameLoader.getHeroesList();
         roundMoves = gameLoader.getRoundMoves();
+        roundAngels = gameLoader.getRoundAngels();
     }
 
     public void play() {

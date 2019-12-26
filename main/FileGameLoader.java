@@ -1,5 +1,7 @@
 package main;
 
+import angels.AngelFactory;
+import angels.BasicAngel;
 import fileio.implementations.FileReader;
 import heroes.BasicHero;
 import heroes.HeroFactory;
@@ -16,6 +18,7 @@ public final class FileGameLoader implements IGameLoader {
     private final GameMap gameMap;
     private final List<BasicHero> heroesList;
     private final List<List<Character>> roundMoves;
+    private final List<List<BasicAngel>> roundAngels;
 
     public FileGameLoader(final FileReader fileReader) throws IOException {
         int mapLines = fileReader.nextInt();
@@ -26,10 +29,12 @@ public final class FileGameLoader implements IGameLoader {
         this.gameMap.initMap(mapColumns, mapLines); // dar etapa 2 impune sa folosesc singleton
         this.heroesList = new ArrayList<BasicHero>();
         this.roundMoves = new ArrayList<List<Character>>();
+        this.roundAngels = new ArrayList<List<BasicAngel>>();
 
         loadMap();
         loadHeroes();
         loadRounds();
+        loadAngels();
     }
 
     private void loadMap() throws IOException {
@@ -73,6 +78,27 @@ public final class FileGameLoader implements IGameLoader {
         }
     }
 
+    private void loadAngels() throws IOException {
+        int numRounds = roundMoves.size();
+        for (int i = 0; i != numRounds; ++i) {
+            ArrayList<BasicAngel> angels = new ArrayList<BasicAngel>();
+            int numAngels = fileReader.nextInt();
+
+            for (int j = 0; j != numAngels; ++j) {
+                String angelLine = fileReader.nextWord();
+                String[] tokens = angelLine.split(",");
+
+                String angelName = tokens[0];
+                int posY = Integer.parseInt(tokens[1]);
+                int posX = Integer.parseInt(tokens[2]);
+
+                angels.add(AngelFactory.createAngel(angelName, posX, posY, getGameMap()));
+            }
+
+            roundAngels.add(angels);
+        }
+    }
+
     @Override
     public GameMap getGameMap() {
         return gameMap;
@@ -86,5 +112,10 @@ public final class FileGameLoader implements IGameLoader {
     @Override
     public List<List<Character>> getRoundMoves() {
         return roundMoves;
+    }
+
+    @Override
+    public List<List<BasicAngel>> getRoundAngels() {
+        return roundAngels;
     }
 }
