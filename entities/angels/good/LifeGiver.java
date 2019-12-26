@@ -24,8 +24,8 @@ public final class LifeGiver extends BasicAngel {
 
     private void apply(final BasicHero receiver, final int angelHP) {
         if (!receiver.isDead()) {
-            receiver.increaseHP(angelHP);
             support.firePropertyChange("interact", null, receiver);
+            receiver.increaseHP(angelHP);
         }
     }
 

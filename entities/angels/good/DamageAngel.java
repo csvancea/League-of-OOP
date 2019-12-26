@@ -24,8 +24,8 @@ public final class DamageAngel extends BasicAngel {
 
     private void apply(final BasicHero receiver, final float angelModifier) {
         if (!receiver.isDead()) {
-            receiver.increaseAdditiveModifier(angelModifier);
             support.firePropertyChange("interact", null, receiver);
+            receiver.increaseAdditiveModifier(angelModifier);
         }
     }
 

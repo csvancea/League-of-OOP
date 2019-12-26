@@ -2,13 +2,17 @@ package main;
 
 import abilities.IAbility;
 import entities.angels.BasicAngel;
+import fileio.implementations.FileWriter;
 import entities.heroes.BasicHero;
 import entities.heroes.strategies.BasicStrategy;
 import entities.heroes.strategies.StrategyFactory;
 import map.GameMap;
 import entities.IEntity;
 import entities.EntityType;
+import observers.HeroObserver;
+import observers.AngelObserver;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -18,16 +22,29 @@ public final class GameLogic {
     private final List<List<Character>> roundMoves;
     private final List<List<BasicAngel>> roundAngels;
 
-    public GameLogic(final IGameLoader gameLoader) {
+    private final FileWriter fileWriter;
+    private final AngelObserver angelObserver;
+    private final HeroObserver heroObserver;
+
+    public GameLogic(final IGameLoader gameLoader, final FileWriter fileWriter) {
         gameMap = gameLoader.getGameMap();
         heroesList = gameLoader.getHeroesList();
         roundMoves = gameLoader.getRoundMoves();
         roundAngels = gameLoader.getRoundAngels();
+
+        this.fileWriter = fileWriter;
+        this.angelObserver = new AngelObserver(fileWriter);
+        this.heroObserver = new HeroObserver(fileWriter);
+
+        addObservers();
     }
 
-    public void play() {
+    public void play() throws IOException {
         int roundIdx = 0;
         for (List<Character> round : roundMoves) {
+            fileWriter.writeWord(String.format("~~ Round %d ~~", roundIdx + 1));
+            fileWriter.writeNewLine();
+
             doHeroMoves(round);
             applyPassivePenalties();
 
@@ -40,6 +57,29 @@ public final class GameLogic {
             applyAngelEffects(roundIdx);
 
             roundIdx++;
+
+            fileWriter.writeNewLine();
+        }
+    }
+
+    public void printResults() throws IOException {
+        fileWriter.writeWord("~~ Results ~~");
+        fileWriter.writeNewLine();
+
+        for (BasicHero hero : getHeroesList()) {
+            String line;
+            char heroChar = hero.getHeroType().toString().charAt(0);
+
+            if (hero.isDead()) {
+                line = String.format("%c dead", heroChar);
+            } else {
+                line = String.format("%c %d %d %d %d %d",
+                        heroChar, hero.getLevel(), hero.getXP(),
+                        hero.getHP(), hero.getY(), hero.getX());
+            }
+
+            fileWriter.writeWord(line);
+            fileWriter.writeNewLine();
         }
     }
 
@@ -73,11 +113,6 @@ public final class GameLogic {
     private void applyDamage(final List<BasicHero> aliveHeroes) {
         for (BasicHero attacked : aliveHeroes) {
             attacked.applyDamageTaken();
-
-            if (attacked.isDead()) {
-                BasicHero attacker = attacked.getLastAttacker();
-                attacker.onKill(attacked);
-            }
         }
     }
 
@@ -89,18 +124,21 @@ public final class GameLogic {
 
     private void applyAngelEffects(final int roundIdx) {
         for (BasicAngel angel : roundAngels.get(roundIdx)) {
-            // TODO: notify
+            angel.setActive(true);
 
             for (IEntity otherEntity : gameMap.getEntities(angel.getX(), angel.getY())) {
                 if (otherEntity.getEntityType() == EntityType.HERO) {
                     ((BasicHero) otherEntity).acceptAngel(angel);
                 }
             }
+
+            angel.setActive(false);
         }
     }
 
     private void applyPassivePenalties() {
         for (BasicHero hero : heroesList) {
+            hero.setLastAttacker(null);
             hero.applyPassivePenalty();
         }
     }
@@ -127,6 +165,18 @@ public final class GameLogic {
             }
 
             heroIdx++;
+        }
+    }
+
+    private void addObservers() {
+        for (BasicHero hero : heroesList) {
+            hero.addPropertyChangeListener(heroObserver);
+        }
+
+        for (List<BasicAngel> angelsList : roundAngels) {
+            for (BasicAngel angel : angelsList) {
+                angel.addPropertyChangeListener(angelObserver);
+            }
         }
     }
 

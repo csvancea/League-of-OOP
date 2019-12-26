@@ -8,6 +8,8 @@ import entities.IEntity;
 import entities.EntityType;
 import map.surface.ISurface;
 
+import java.beans.PropertyChangeListener;
+import java.beans.PropertyChangeSupport;
 import java.util.ArrayList;
 
 public abstract class BasicHero implements IEntity {
@@ -34,8 +36,11 @@ public abstract class BasicHero implements IEntity {
 
     private float additiveModifier;
 
+    private final PropertyChangeSupport support;
+
     public BasicHero() {
         abilities = new ArrayList<IAbility>();
+        support = new PropertyChangeSupport(this);
 
         setId(0);
         setMap(null);
@@ -50,15 +55,7 @@ public abstract class BasicHero implements IEntity {
 
     @Override
     public final String toString() {
-        String ret;
-        char heroChar = getHeroType().toString().charAt(0);
-
-        if (isDead()) {
-            ret = String.format("%c dead", heroChar);
-        } else {
-            ret = String.format("%c %d %d %d %d %d", heroChar, getLevel(), getXP(), getHP(), y, x);
-        }
-        return ret;
+        return String.format("%s %d", getHeroType(), getId());
     }
 
     /**
@@ -181,6 +178,7 @@ public abstract class BasicHero implements IEntity {
         return level;
     }
     public final void setLevel(final int newLevel) {
+        support.firePropertyChange("setLevel", level, newLevel);
         this.level = newLevel;
 
         if (!isDead()) {
@@ -200,7 +198,20 @@ public abstract class BasicHero implements IEntity {
         return hp;
     }
     public final void setHP(final int newHP) {
+        if (newHP > 0 && isDead()) {
+            onRevive();
+        }
+
         this.hp = Math.max(0, newHP);
+
+        if (isDead()) {
+            IEntity attacker = getLastAttacker();
+            if (attacker.getEntityType() == EntityType.HERO) {
+                ((BasicHero) attacker).onKill(this);
+            }
+
+            onDeath(attacker);
+        }
     }
     public final void increaseHP(final int amount) {
         setHP(getHP() + amount);
@@ -219,6 +230,21 @@ public abstract class BasicHero implements IEntity {
         bonusXP = Math.max(0, bonusXP);
 
         increaseXP(bonusXP);
+    }
+
+    /**
+     * Apelata dupa moarte.
+     * @param attacker entitatea care a omorat
+     */
+    public final void onDeath(final IEntity attacker) {
+        support.firePropertyChange("death", null, attacker);
+    }
+
+    /**
+     * Apelata inainte de a fi inviat.
+     */
+    public final void onRevive() {
+        support.firePropertyChange("revive", null, null);
     }
 
     /**
@@ -379,4 +405,21 @@ public abstract class BasicHero implements IEntity {
      * @param angel ingerul ce se va aplica asupra eroului this
      */
     public abstract void acceptAngel(BasicAngel angel);
+
+    /**
+     * Adauga un listener.
+     * @param pcl listener
+     */
+    public final void addPropertyChangeListener(final PropertyChangeListener pcl) {
+        support.addPropertyChangeListener(pcl);
+    }
+
+    /**
+     * Sterge un listener.
+     * @param pcl listener
+     */
+    public final void removePropertyChangeListener(final PropertyChangeListener pcl) {
+        support.removePropertyChangeListener(pcl);
+    }
+
 }

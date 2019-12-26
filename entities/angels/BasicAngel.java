@@ -34,7 +34,8 @@ public abstract class BasicAngel implements IEntity {
         return EntityType.ANGEL;
     }
 
-    public final String getName() {
+    @Override
+    public final String toString() {
         return name;
     }
 

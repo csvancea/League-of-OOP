@@ -27,10 +27,10 @@ public final class LevelUpAngel extends BasicAngel {
             int bonusXP = receiver.getNeededXPForLevelUp() - receiver.getXP();
             assert (bonusXP > 0);
             // TODO: bonusul se aplica dupa levelup ul de la kill sau inainte?
+            support.firePropertyChange("interact", null, receiver);
             receiver.increaseXP(bonusXP);
             receiver.levelUp();
             receiver.increaseAdditiveModifier(angelModifier);
-            support.firePropertyChange("interact", null, receiver);
         }
     }
 

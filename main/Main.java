@@ -13,15 +13,10 @@ public final class Main {
             FileWriter fileWriter = new FileWriter(args[1]);
 
             IGameLoader gameLoader = new FileGameLoader(fileReader);
-            GameLogic gameLogic = new GameLogic(gameLoader);
+            GameLogic gameLogic = new GameLogic(gameLoader, fileWriter);
             gameLogic.play();
+            gameLogic.printResults();
 
-            for (BasicHero hero : gameLogic.getHeroesList()) {
-                fileWriter.writeWord(hero.toString());
-                fileWriter.writeNewLine();
-            }
-
-            fileWriter.writeNewLine();
             fileWriter.close();
             fileReader.close();
         } catch (Exception e) {
