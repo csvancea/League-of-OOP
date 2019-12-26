@@ -2,6 +2,7 @@ package abilities.rogue;
 
 import abilities.IAbility;
 import abilities.IPassive;
+import abilities.Utils;
 import entities.heroes.BasicHero;
 import entities.heroes.Knight;
 import entities.heroes.Pyromancer;
@@ -34,7 +35,8 @@ public final class Paralysis implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
-        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
+        float adjustedHeroModifier = Utils.adjustHeroModifier(
+                heroModifier, getAttacker().getAdditiveModifier());
         float damage = computeDamageWithoutModifiers();
         damage *= adjustedHeroModifier * getAttacker().getLandModifier();
 
