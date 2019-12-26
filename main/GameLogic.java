@@ -13,6 +13,7 @@ import observers.HeroObserver;
 import observers.AngelObserver;
 
 import java.io.IOException;
+import java.util.Comparator;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -126,11 +127,12 @@ public final class GameLogic {
         for (BasicAngel angel : roundAngels.get(roundIdx)) {
             angel.setActive(true);
 
-            for (IEntity otherEntity : gameMap.getEntities(angel.getX(), angel.getY())) {
-                if (otherEntity.getEntityType() == EntityType.HERO) {
-                    ((BasicHero) otherEntity).acceptAngel(angel);
-                }
-            }
+            gameMap.getEntities(angel.getX(), angel.getY())
+                    .stream()
+                    .filter(entity -> entity.getEntityType() == EntityType.HERO)
+                    .map(entity -> (BasicHero) entity)
+                    .sorted(Comparator.comparingInt(BasicHero::getId))
+                    .forEach(hero -> hero.acceptAngel(angel));
 
             angel.setActive(false);
         }
