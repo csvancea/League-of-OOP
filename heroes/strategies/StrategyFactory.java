@@ -11,6 +11,10 @@ public final class StrategyFactory {
                 return new KnightStrategy(hero);
             case PYROMANCER:
                 return new PyromancerStrategy(hero);
+            case ROGUE:
+                return new RogueStrategy(hero);
+            case WIZARD:
+                return new WizardStrategy(hero);
             default:
                 return null;
         }
