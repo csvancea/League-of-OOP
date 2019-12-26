@@ -53,7 +53,7 @@ public final class GameLogic {
 
             applyStrategies(aliveHeroes);
             attackEachOthers(aliveHeroes);
-            applyDamage(aliveHeroes);
+            applyDamage();
             levelUp(aliveHeroes);
             applyAngelEffects(roundIdx);
 
@@ -111,9 +111,17 @@ public final class GameLogic {
         }
     }
 
-    private void applyDamage(final List<BasicHero> aliveHeroes) {
-        for (BasicHero attacked : aliveHeroes) {
-            attacked.applyDamageTaken();
+    private void applyDamage() {
+        for (int y = 0; y != gameMap.getMaxY(); ++y) {
+            for (int x = 0; x != gameMap.getMaxX(); ++x) {
+                gameMap.getEntities(x, y)
+                        .stream()
+                        .filter(entity -> entity.getEntityType() == EntityType.HERO)
+                        .map(entity -> (BasicHero) entity)
+                        .filter(hero -> !hero.isDead())
+                        .sorted(Comparator.comparingInt(BasicHero::getId).reversed())
+                        .forEach(BasicHero::applyDamageTaken);
+            }
         }
     }
 
