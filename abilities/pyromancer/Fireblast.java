@@ -29,8 +29,9 @@ public final class Fireblast implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
+        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
         float damage = computeDamageWithoutModifiers();
-        damage *= heroModifier * getAttacker().getLandModifier();
+        damage *= adjustedHeroModifier * getAttacker().getLandModifier();
 
         attacked.increaseDamageTaken(Math.round(damage));
     }

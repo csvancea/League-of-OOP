@@ -31,6 +31,7 @@ public final class Deflect implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
+        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
         float percent = BASE_PERCENT + getAttacker().getLevel() * PERCENT_MULTIPLIER;
         percent = Math.min(percent, MAX_PERCENT) * PERCENT;
 
@@ -42,7 +43,7 @@ public final class Deflect implements IAbility {
                                         * attacked.getLandModifier());
         }
 
-        damageGiven = percent * damageTaken * heroModifier * getAttacker().getLandModifier();
+        damageGiven = percent * damageTaken * adjustedHeroModifier * getAttacker().getLandModifier();
         attacked.increaseDamageTaken(Math.round(damageGiven));
     }
 

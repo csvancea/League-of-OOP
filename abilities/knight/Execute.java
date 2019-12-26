@@ -41,13 +41,14 @@ public final class Execute implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
+        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
         float damage;
 
         if (isInstantKillAvailable(attacked)) {
             damage = attacked.getHP();
         } else {
             damage = computeDamageWithoutModifiers();
-            damage *= heroModifier * getAttacker().getLandModifier();
+            damage *= adjustedHeroModifier * getAttacker().getLandModifier();
         }
 
         attacked.increaseDamageTaken(Math.round(damage));

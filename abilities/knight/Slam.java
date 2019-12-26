@@ -32,8 +32,9 @@ public final class Slam implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
+        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
         float damage = computeDamageWithoutModifiers();
-        damage *= heroModifier * getAttacker().getLandModifier();
+        damage *= adjustedHeroModifier * getAttacker().getLandModifier();
 
         attacked.setPassivePenalty(PASSIVE_PENALTY_ROUNDS, new IPassive() {
             private int x = attacked.getX();

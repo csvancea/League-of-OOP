@@ -34,8 +34,9 @@ public final class Paralysis implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
+        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
         float damage = computeDamageWithoutModifiers();
-        damage *= heroModifier * getAttacker().getLandModifier();
+        damage *= adjustedHeroModifier * getAttacker().getLandModifier();
 
         int numRounds;
         if (attacked.getSurface().getSurfaceType() == SurfaceType.WOODS) {

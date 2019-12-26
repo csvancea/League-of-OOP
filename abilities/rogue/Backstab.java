@@ -42,8 +42,9 @@ public final class Backstab implements IAbility {
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
+        float adjustedHeroModifier = heroModifier + getAttacker().getAdditiveModifier();
         float damage = computeDamageWithoutModifiers();
-        damage *= heroModifier * getAttacker().getLandModifier();
+        damage *= adjustedHeroModifier * getAttacker().getLandModifier();
 
         hitCountThisTurn++;
         attacked.increaseDamageTaken(Math.round(damage));
