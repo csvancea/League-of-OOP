@@ -3,6 +3,7 @@ package heroes;
 import abilities.IAbility;
 import abilities.pyromancer.Fireblast;
 import abilities.pyromancer.Ignite;
+import angels.BasicAngel;
 import map.surface.SurfaceType;
 
 public final class Pyromancer extends BasicHero {
@@ -44,5 +45,10 @@ public final class Pyromancer extends BasicHero {
     public void acceptAbility(final IAbility ability) {
         ability.apply(this);
         setLastAttacker(ability.getAttacker());
+    }
+
+    @Override
+    public void acceptAngel(final BasicAngel angel) {
+        angel.apply(this);
     }
 }

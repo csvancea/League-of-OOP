@@ -2,6 +2,7 @@ package heroes;
 
 import abilities.IAbility;
 import abilities.IPassive;
+import angels.BasicAngel;
 import map.GameMap;
 import map.entity.IMapEntity;
 import map.entity.MapEntityType;
@@ -48,10 +49,11 @@ public abstract class BasicHero implements IMapEntity {
     @Override
     public final String toString() {
         String ret;
+        char heroChar = getHeroType().toString().charAt(0);
+
         if (isDead()) {
-            ret = String.format("%c dead", getHeroType().toString().charAt(0));
+            ret = String.format("%c dead", heroChar);
         } else {
-            char heroChar = getHeroType().toString().charAt(0);
             ret = String.format("%c %d %d %d %d %d", heroChar, getLevel(), getXP(), getHP(), y, x);
         }
         return ret;
@@ -354,4 +356,10 @@ public abstract class BasicHero implements IMapEntity {
     public final void decreaseAdditiveModifier(final float amount) {
         setAdditiveModifier(getAdditiveModifier() - amount);
     }
+
+    /**
+     * Accepta efectul unei inger. Implementare double-dispatch.
+     * @param angel ingerul ce se va aplica asupra eroului this
+     */
+    public abstract void acceptAngel(BasicAngel angel);
 }
