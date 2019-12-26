@@ -3,6 +3,8 @@ package main;
 import abilities.IAbility;
 import angels.BasicAngel;
 import heroes.BasicHero;
+import heroes.strategies.BasicStrategy;
+import heroes.strategies.StrategyFactory;
 import map.GameMap;
 import map.entity.IMapEntity;
 import map.entity.MapEntityType;
@@ -31,12 +33,25 @@ public final class GameLogic {
 
             List<BasicHero> aliveHeroes = getAliveHeroesList();
 
+            applyStrategies(aliveHeroes);
             attackEachOthers(aliveHeroes);
             applyDamage(aliveHeroes);
             levelUp(aliveHeroes);
             applyAngelEffects(roundIdx);
 
             roundIdx++;
+        }
+    }
+
+    private void applyStrategies(final List<BasicHero> aliveHeroes) {
+        for (BasicHero hero : aliveHeroes) {
+            if (!hero.isStunned()) {
+                BasicStrategy strategy = StrategyFactory.createStrategy(hero);
+
+                // TODO: check this round!
+                hero.setHP(Math.round(hero.getHP() * strategy.getHPModifier()));
+                hero.increaseAdditiveModifier(strategy.getHeroModifier());
+            }
         }
     }
 
