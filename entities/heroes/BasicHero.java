@@ -202,7 +202,7 @@ public abstract class BasicHero implements IEntity {
             onRevive();
         }
 
-        this.hp = Math.max(0, newHP);
+        this.hp = Math.max(0, Math.min(getMaxHP(), newHP)); // clamp between [0 .. maxHP]
 
         if (isDead()) {
             IEntity attacker = getLastAttacker();
