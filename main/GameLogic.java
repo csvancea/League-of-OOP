@@ -15,6 +15,8 @@ import observers.AngelObserver;
 import java.io.IOException;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 import java.util.stream.Collectors;
 
 public final class GameLogic {
@@ -114,13 +116,28 @@ public final class GameLogic {
     private void applyDamage() {
         for (int y = 0; y != gameMap.getMaxY(); ++y) {
             for (int x = 0; x != gameMap.getMaxX(); ++x) {
-                gameMap.getEntities(x, y)
+                Map<BasicHero, Integer> initialXP = new HashMap<BasicHero, Integer>();
+                List<BasicHero> aliveHeroesInCell = gameMap.getEntities(x, y)
                         .stream()
                         .filter(entity -> entity.getEntityType() == EntityType.HERO)
                         .map(entity -> (BasicHero) entity)
                         .filter(hero -> !hero.isDead())
                         .sorted(Comparator.comparingInt(BasicHero::getId).reversed())
-                        .forEach(BasicHero::applyDamageTaken);
+                        .collect(Collectors.toList());
+
+                aliveHeroesInCell.stream().forEach(hero -> initialXP.put(hero, hero.getXP()));
+                aliveHeroesInCell.stream().forEach(BasicHero::applyDamageTaken);
+
+                long aliveHeroesCountAfterDamage = aliveHeroesInCell
+                        .stream()
+                        .filter(hero -> !hero.isDead())
+                        .count();
+
+                if (aliveHeroesCountAfterDamage == 0) {
+                    aliveHeroesInCell
+                            .stream()
+                            .forEach(hero -> hero.setXP(initialXP.get(hero)));
+                }
             }
         }
     }
