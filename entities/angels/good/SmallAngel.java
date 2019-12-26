@@ -9,41 +9,42 @@ import entities.heroes.Rogue;
 import entities.heroes.Wizard;
 import map.GameMap;
 
-public final class LevelUpAngel extends BasicAngel {
+public final class SmallAngel extends BasicAngel {
     private static final float KNIGHT_MODIFIER = 0.10f;
-    private static final float PYROMANCER_MODIFIER = 0.20f;
-    private static final float ROGUE_MODIFIER = 0.15f;
-    private static final float WIZARD_MODIFIER = 0.25f;
+    private static final float PYROMANCER_MODIFIER = 0.15f;
+    private static final float ROGUE_MODIFIER = 0.05f;
+    private static final float WIZARD_MODIFIER = 0.10f;
 
-    public LevelUpAngel(final int x, final int y, final GameMap map) {
+    private static final int KNIGHT_HP = 10;
+    private static final int PYROMANCER_HP = 15;
+    private static final int ROGUE_HP = 20;
+    private static final int WIZARD_HP = 25;
+
+    public SmallAngel(final int x, final int y, final GameMap map) {
         super(x, y, map);
 
         type = AngelType.GOOD;
         name = this.getClass().getSimpleName();
     }
 
-    private void apply(final BasicHero receiver, final float angelModifier) {
+    private void apply(final BasicHero receiver, final float angelModifier, final int angelHP) {
         if (!receiver.isDead()) {
-            int bonusXP = receiver.getNeededXPForLevelUp() - receiver.getXP();
-            assert (bonusXP > 0);
-            // TODO: bonusul se aplica dupa levelup ul de la kill sau inainte?
             support.firePropertyChange("interact", null, receiver);
-            receiver.increaseXP(bonusXP);
-            receiver.levelUp();
             receiver.increaseAdditiveModifier(angelModifier);
+            receiver.increaseHP(angelHP);
         }
     }
 
     public void apply(final Knight receiver) {
-        apply(receiver, KNIGHT_MODIFIER);
+        apply(receiver, KNIGHT_MODIFIER, KNIGHT_HP);
     }
     public void apply(final Pyromancer receiver) {
-        apply(receiver, PYROMANCER_MODIFIER);
+        apply(receiver, PYROMANCER_MODIFIER, PYROMANCER_HP);
     }
     public void apply(final Rogue receiver) {
-        apply(receiver, ROGUE_MODIFIER);
+        apply(receiver, ROGUE_MODIFIER, ROGUE_HP);
     }
     public void apply(final Wizard receiver) {
-        apply(receiver, WIZARD_MODIFIER);
+        apply(receiver, WIZARD_MODIFIER, WIZARD_HP);
     }
 }

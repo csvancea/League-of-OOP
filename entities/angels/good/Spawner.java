@@ -9,36 +9,36 @@ import entities.heroes.Rogue;
 import entities.heroes.Wizard;
 import map.GameMap;
 
-public final class DamageAngel extends BasicAngel {
-    private static final float KNIGHT_MODIFIER = 0.15f;
-    private static final float PYROMANCER_MODIFIER = 0.20f;
-    private static final float ROGUE_MODIFIER = 0.30f;
-    private static final float WIZARD_MODIFIER = 0.40f;
+public final class Spawner extends BasicAngel {
+    private static final int KNIGHT_HP = 200;
+    private static final int PYROMANCER_HP = 150;
+    private static final int ROGUE_HP = 180;
+    private static final int WIZARD_HP = 120;
 
-    public DamageAngel(final int x, final int y, final GameMap map) {
+    public Spawner(final int x, final int y, final GameMap map) {
         super(x, y, map);
 
         type = AngelType.GOOD;
         name = this.getClass().getSimpleName();
     }
 
-    private void apply(final BasicHero receiver, final float angelModifier) {
-        if (!receiver.isDead()) {
+    private void apply(final BasicHero receiver, final int angelHP) {
+        if (receiver.isDead()) {
             support.firePropertyChange("interact", null, receiver);
-            receiver.increaseAdditiveModifier(angelModifier);
+            receiver.setHP(angelHP);
         }
     }
 
     public void apply(final Knight receiver) {
-        apply(receiver, KNIGHT_MODIFIER);
+        apply(receiver, KNIGHT_HP);
     }
     public void apply(final Pyromancer receiver) {
-        apply(receiver, PYROMANCER_MODIFIER);
+        apply(receiver, PYROMANCER_HP);
     }
     public void apply(final Rogue receiver) {
-        apply(receiver, ROGUE_MODIFIER);
+        apply(receiver, ROGUE_HP);
     }
     public void apply(final Wizard receiver) {
-        apply(receiver, WIZARD_MODIFIER);
+        apply(receiver, WIZARD_HP);
     }
 }

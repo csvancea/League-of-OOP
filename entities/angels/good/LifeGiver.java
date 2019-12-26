@@ -19,7 +19,7 @@ public final class LifeGiver extends BasicAngel {
         super(x, y, map);
 
         type = AngelType.GOOD;
-        name = "LifeGiver";
+        name = this.getClass().getSimpleName();
     }
 
     private void apply(final BasicHero receiver, final int angelHP) {
