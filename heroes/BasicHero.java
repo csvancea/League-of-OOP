@@ -28,6 +28,7 @@ public abstract class BasicHero implements IMapEntity {
     private int passiveNumRounds;
     private IPassive passivePenalty;
     private IPassive passivePenaltyFinish;
+    private boolean passiveJustEnded;
 
     private boolean isStunned;
 
@@ -277,19 +278,26 @@ public abstract class BasicHero implements IMapEntity {
         passiveNumRounds = rounds;
         passivePenalty = action;
         passivePenaltyFinish = finish;
+        passiveJustEnded = false;
     }
 
     /**
      * Aplica actiunea pasiva.
      */
     public final void applyPassivePenalty() {
-        if (passiveNumRounds != 0 && passivePenalty != null && !isDead()) {
-            passivePenalty.apply(this);
+        if (passiveJustEnded) {
+            if (passivePenaltyFinish != null) {
+                passivePenaltyFinish.apply(this);
+            }
+            setPassivePenalty(0, null, null);
+        }
+
+        if (passiveNumRounds != 0) {
+            if (passivePenalty != null && !isDead()) {
+                passivePenalty.apply(this);
+            }
             if (--passiveNumRounds == 0) {
-                if (passivePenaltyFinish != null) {
-                    passivePenaltyFinish.apply(this);
-                }
-                setPassivePenalty(0, null, null);
+                passiveJustEnded = true;
             }
         }
     }
