@@ -24,6 +24,7 @@ public final class GameLogic {
     }
 
     public void play() {
+        int roundIdx = 0;
         for (List<Character> round : roundMoves) {
             doHeroMoves(round);
             applyPassivePenalties();
@@ -33,6 +34,9 @@ public final class GameLogic {
             attackEachOthers(aliveHeroes);
             applyDamage(aliveHeroes);
             levelUp(aliveHeroes);
+            applyAngelEffects(roundIdx);
+
+            roundIdx++;
         }
     }
 
@@ -65,6 +69,18 @@ public final class GameLogic {
     private void levelUp(final List<BasicHero> aliveHeroes) {
         for (BasicHero hero : aliveHeroes) {
             hero.levelUp();
+        }
+    }
+
+    private void applyAngelEffects(final int roundIdx) {
+        for (BasicAngel angel : roundAngels.get(roundIdx)) {
+            // TODO: notify
+
+            for (IMapEntity otherEntity : gameMap.getEntities(angel.getX(), angel.getY())) {
+                if (otherEntity.getMapEntityType() == MapEntityType.HERO) {
+                    ((BasicHero) otherEntity).acceptAngel(angel);
+                }
+            }
         }
     }
 
