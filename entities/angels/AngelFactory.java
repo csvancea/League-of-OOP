@@ -1,5 +1,8 @@
 package entities.angels;
 
+import entities.angels.evil.DarkAngel;
+import entities.angels.evil.Dracula;
+import entities.angels.evil.TheDoomer;
 import entities.angels.good.DamageAngel;
 import entities.angels.good.GoodBoy;
 import entities.angels.good.LevelUpAngel;
@@ -15,6 +18,7 @@ public final class AngelFactory {
     public static BasicAngel createAngel(final String angelName, final int x, final int y,
                                          final GameMap gameMap) {
         switch (angelName) {
+        // Good:
             case "DamageAngel":
                 return new DamageAngel(x, y, gameMap);
             case "GoodBoy":
@@ -29,6 +33,13 @@ public final class AngelFactory {
                 return new Spawner(x, y, gameMap);
             case "XPAngel":
                 return new XPAngel(x, y, gameMap);
+        // Evil:
+            case "DarkAngel":
+                return new DarkAngel(x, y, gameMap);
+            case "Dracula":
+                return new Dracula(x, y, gameMap);
+            case "TheDoomer":
+                return new TheDoomer(x, y, gameMap);
             default:
                 return null;
         }
