@@ -45,20 +45,19 @@ public final class Paralysis implements IAbility {
         }
 
         float finalDamage = damage;
-        attacked.setPassivePenalty(getAttacker(), new IPassive() {
+        attacked.setPassivePenalty(numRounds, new IPassive() {
             private int x = attacked.getX();
             private int y = attacked.getY();
-            private int r = numRounds;
             private int d = Math.round(finalDamage);
+
             @Override
             public void apply(final BasicHero attacked) {
-                if (r-- > 0) {
-                    attacked.decreaseHP(d); // DoT
-                    attacked.setPosition(x, y); // stun
-                }
+                attacked.decreaseHP(d); // DoT
+                attacked.setPosition(x, y); // stun
             }
-        });
+        }, heroAttacked -> heroAttacked.setStunned(false));
 
+        attacked.setStunned(true);
         attacked.increaseDamageTaken(Math.round(damage));
     }
 

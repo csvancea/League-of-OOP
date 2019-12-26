@@ -39,16 +39,14 @@ public final class Ignite implements IAbility {
         float passiveDamage = (PASSIVE_PENALTY_BASE_DAMAGE
                 + getAttacker().getLevel() * PASSIVE_PENALTY_MULTIPLIER) * modifiers;
 
-        attacked.setPassivePenalty(getAttacker(), new IPassive() {
-            private int r = PASSIVE_PENALTY_ROUNDS;
+        attacked.setPassivePenalty(PASSIVE_PENALTY_ROUNDS, new IPassive() {
             private int dmg = Math.round(passiveDamage);
+
             @Override
             public void apply(final BasicHero attacked) {
-                if (r-- > 0) {
-                    attacked.decreaseHP(dmg); // DoT
-                }
+                attacked.decreaseHP(dmg); // DoT
             }
-        });
+        }, null);
 
         attacked.increaseDamageTaken(Math.round(damage));
     }

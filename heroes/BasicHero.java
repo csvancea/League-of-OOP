@@ -24,8 +24,11 @@ public abstract class BasicHero implements IMapEntity {
     private final ArrayList<IAbility> abilities;
 
     private BasicHero lastAttacker;
-    private BasicHero passiveAttacker;
+    private int passiveNumRounds;
     private IPassive passivePenalty;
+    private IPassive passivePenaltyFinish;
+
+    private boolean isStunned;
 
     public BasicHero() {
         abilities = new ArrayList<IAbility>();
@@ -36,7 +39,7 @@ public abstract class BasicHero implements IMapEntity {
         setLevel(0);
         setHP(getMaxHP());
         setDamageTaken(0);
-        setPassivePenalty(null, null);
+        setPassivePenalty(0, null, null);
     }
 
     @Override
@@ -245,33 +248,55 @@ public abstract class BasicHero implements IMapEntity {
     }
 
     /**
-     * Seteaza o actiune pasiva va afecta eroul permanent pana
-     *   * este inlocuita de alta actiune pasiva
+     * Seteaza o actiune pasiva ce va afecta eroul pana:
+     *   * se termina cele `rounds` runde;
+     *   * este inlocuita de alta actiune pasiva;
      *   * moare eroul.
      *
-     * @param attacker eroul care a atacat
+     * @param rounds cate runde va fi aplicata actiunea
      * @param action actiunea pasiva
+     * @param finish actiunea ce va fi indeplinita imediat dupa terminarea efectului pasiv
      */
-    public final void setPassivePenalty(final BasicHero attacker, final IPassive action) {
-        passiveAttacker = attacker;
+    public final void setPassivePenalty(final int rounds,
+                                        final IPassive action, final IPassive finish) {
+        if (passivePenaltyFinish != null) {
+            passivePenaltyFinish.apply(this);
+        }
+
+        passiveNumRounds = rounds;
         passivePenalty = action;
+        passivePenaltyFinish = finish;
     }
 
     /**
      * Aplica actiunea pasiva.
      */
     public final void applyPassivePenalty() {
-        if (passivePenalty != null && !isDead()) {
+        if (passiveNumRounds != 0 && passivePenalty != null && !isDead()) {
             passivePenalty.apply(this);
+            if (--passiveNumRounds == 0) {
+                if (passivePenaltyFinish != null) {
+                    passivePenaltyFinish.apply(this);
+                }
+                setPassivePenalty(0, null, null);
+            }
         }
     }
 
     /**
-     * Returneaza eroul ce a actionat ultima data pasiv.
-     * @return BasicHero
+     * Verifica daca jucatorul este imobilizat.
+     * @return boolean
      */
-    public final BasicHero getPassiveAttacker() {
-        return passiveAttacker;
+    public final boolean isStunned() {
+        return isStunned;
+    }
+
+    /**
+     * Seteaza statutul de imobilizat.
+     * @param stunned boolean
+     */
+    public final void setStunned(final boolean stunned) {
+        isStunned = stunned;
     }
 
     /**
