@@ -56,6 +56,7 @@ public final class FileGameLoader implements IGameLoader {
             int posX = fileReader.nextInt();
 
             BasicHero hero = HeroFactory.getHero(heroChar);
+            hero.setId(i);
             hero.setMap(gameMap);
             hero.setPosition(posX, posY);
 
