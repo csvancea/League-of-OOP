@@ -159,6 +159,9 @@ public abstract class BasicHero implements IMapEntity {
         setXP(getXP() + amount);
     }
 
+    public final int getNeededXPForLevelUp() {
+        return BASE_XP_FOR_LEVEL_UP + getLevel() * MULTIPLIER_FOR_LEVEL_UP;
+    }
     public final int getLevel() {
         return level;
     }
@@ -173,7 +176,7 @@ public abstract class BasicHero implements IMapEntity {
         setLevel(getLevel() + 1);
     }
     public final void levelUp() {
-        while (getXP() >= BASE_XP_FOR_LEVEL_UP + getLevel() * MULTIPLIER_FOR_LEVEL_UP) {
+        while (getXP() >= getNeededXPForLevelUp()) {
             increaseLevel();
         }
     }
@@ -183,6 +186,9 @@ public abstract class BasicHero implements IMapEntity {
     }
     public final void setHP(final int newHP) {
         this.hp = Math.max(0, newHP);
+    }
+    public final void increaseHP(final int amount) {
+        setHP(getHP() + amount);
     }
     public final void decreaseHP(final int amount) {
         setHP(getHP() - amount);
