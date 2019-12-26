@@ -16,14 +16,25 @@ import java.util.ArrayList;
  *   * axa Y: liniile
  */
 public final class GameMap {
-    private final Cell[][] map;
-    private final int maxX;
-    private final int maxY;
+    private static GameMap instance = null;
 
-    public GameMap(final int maxX, final int maxY) {
+    private Cell[][] map;
+    private int maxX;
+    private int maxY;
+
+    private GameMap() { }
+
+    public static GameMap getInstance() {
+        if (instance == null) {
+            instance = new GameMap();
+        }
+        return instance;
+    }
+
+    public void initMap(final int maxXVal, final int maxYVal) {
+        this.maxX = maxXVal;
+        this.maxY = maxYVal;
         this.map = new Cell[maxX][maxY];
-        this.maxX = maxX;
-        this.maxY = maxY;
 
         for (int x = 0; x != maxX; ++x) {
             for (int y = 0; y != maxY; ++y) {

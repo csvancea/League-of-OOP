@@ -22,7 +22,8 @@ public final class FileGameLoader implements IGameLoader {
         int mapColumns = fileReader.nextInt();
 
         this.fileReader = fileReader;
-        this.gameMap = new GameMap(mapColumns, mapLines);
+        this.gameMap = GameMap.getInstance(); // in prima instanta foloseam dependency injection
+        this.gameMap.initMap(mapColumns, mapLines); // dar etapa 2 impune sa folosesc singleton
         this.heroesList = new ArrayList<BasicHero>();
         this.roundMoves = new ArrayList<List<Character>>();
 
