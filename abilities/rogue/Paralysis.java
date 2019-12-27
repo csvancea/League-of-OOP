@@ -14,9 +14,9 @@ public final class Paralysis implements IAbility {
     private static final int BASE_DAMAGE = 40;
     private static final int DAMAGE_MULTIPLIER = 10;
 
-    private static final float KNIGHT_MODIFIER = 0.80f;
+    private static final float KNIGHT_MODIFIER = 0.79f;
     private static final float PYROMANCER_MODIFIER = 1.20f;
-    private static final float ROGUE_MODIFIER = 0.90f;
+    private static final float ROGUE_MODIFIER = 0.89f;
     private static final float WIZARD_MODIFIER = 1.25f;
 
     private static final int PASSIVE_PENALTY_MIN_ROUNDS = 3;
@@ -29,16 +29,17 @@ public final class Paralysis implements IAbility {
     }
 
     @Override
-    public float computeDamageWithoutModifiers() {
-        float damage = computeDamageWithLevelMultiplier();
+    public int computeDamageWithoutModifiers() {
+        int damage = computeDamageWithLevelMultiplier();
         return damage;
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
         float adjustedHeroModifier = Utils.adjustHeroModifier(
                 heroModifier, getAttacker().getAdditiveModifier());
-        float damage = computeDamageWithoutModifiers();
-        damage *= adjustedHeroModifier * getAttacker().getLandModifier();
+        int damage = computeDamageWithoutModifiers();
+        damage = Math.round(getAttacker().getLandModifier() * damage);
+        damage = Math.round(adjustedHeroModifier * damage);
 
         int numRounds;
         if (attacked.getSurface().getSurfaceType() == SurfaceType.WOODS) {

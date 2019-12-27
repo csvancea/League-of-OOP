@@ -27,14 +27,14 @@ public final class Drain implements IAbility {
     }
 
     @Override
-    public float computeDamageWithoutModifiers() {
-        return 0.00f;
+    public int computeDamageWithoutModifiers() {
+        return 0;
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
         float adjustedHeroModifier = Utils.adjustHeroModifier(
                 heroModifier, getAttacker().getAdditiveModifier());
-        float percent = (BASE_PERCENT + getAttacker().getLevel() * PERCENT_MULTIPLIER) * PERCENT;
+        float percent = PERCENT * (BASE_PERCENT + getAttacker().getLevel() * PERCENT_MULTIPLIER);
         percent *= adjustedHeroModifier * getAttacker().getLandModifier();
 
         float baseHP = Math.min(MAX_HP_MODIFIER * attacked.getMaxHP(), attacked.getHP());

@@ -29,21 +29,25 @@ public final class Ignite implements IAbility {
     }
 
     @Override
-    public float computeDamageWithoutModifiers() {
-        float damage = computeDamageWithLevelMultiplier();
+    public int computeDamageWithoutModifiers() {
+        int damage = computeDamageWithLevelMultiplier();
         return damage;
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
         float adjustedHeroModifier = Utils.adjustHeroModifier(
                 heroModifier, getAttacker().getAdditiveModifier());
-        float modifiers = adjustedHeroModifier * getAttacker().getLandModifier();
-        float damage = computeDamageWithoutModifiers() * modifiers;
-        float passiveDamage = (PASSIVE_PENALTY_BASE_DAMAGE
-                + getAttacker().getLevel() * PASSIVE_PENALTY_MULTIPLIER) * modifiers;
+        int damage = computeDamageWithoutModifiers();
+        damage = Math.round(getAttacker().getLandModifier() * damage);
+        damage = Math.round(adjustedHeroModifier * damage);
 
+        int passiveDamage = PASSIVE_PENALTY_BASE_DAMAGE + getAttacker().getLevel() * PASSIVE_PENALTY_MULTIPLIER;
+        passiveDamage = Math.round(getAttacker().getLandModifier() * passiveDamage);
+        passiveDamage = Math.round(adjustedHeroModifier * passiveDamage);
+
+        final int finalPassiveDamage = passiveDamage;
         attacked.setPassivePenalty(PASSIVE_PENALTY_ROUNDS, new IPassive() {
-            private int dmg = Math.round(passiveDamage);
+            private int dmg = finalPassiveDamage;
 
             @Override
             public void apply(final BasicHero attacked) {
@@ -51,7 +55,7 @@ public final class Ignite implements IAbility {
             }
         }, null);
 
-        attacked.increaseDamageTaken(Math.round(damage));
+        attacked.increaseDamageTaken(damage);
     }
 
     @Override

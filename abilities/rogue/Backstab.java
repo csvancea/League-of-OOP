@@ -32,11 +32,11 @@ public final class Backstab implements IAbility {
     }
 
     @Override
-    public float computeDamageWithoutModifiers() {
-        float damage = computeDamageWithLevelMultiplier();
+    public int computeDamageWithoutModifiers() {
+        int damage = computeDamageWithLevelMultiplier();
         if (hitCount % SPECIAL_HIT_EACH_X_ROUNDS == 0
                 && getAttacker().getSurface().getSurfaceType() == SurfaceType.WOODS) {
-            damage *= SPECIAL_HIT_MODIFIER;
+            damage = Math.round(SPECIAL_HIT_MODIFIER * damage); // TODO: this is shitty
         }
 
         return damage;
@@ -45,11 +45,12 @@ public final class Backstab implements IAbility {
     private void apply(final BasicHero attacked, final float heroModifier) {
         float adjustedHeroModifier = Utils.adjustHeroModifier(
                 heroModifier, getAttacker().getAdditiveModifier());
-        float damage = computeDamageWithoutModifiers();
-        damage *= adjustedHeroModifier * getAttacker().getLandModifier();
+        int damage = computeDamageWithoutModifiers();
+        damage = Math.round(getAttacker().getLandModifier() * damage);
+        damage = Math.round(adjustedHeroModifier * damage);
 
         hitCountThisTurn++;
-        attacked.increaseDamageTaken(Math.round(damage));
+        attacked.increaseDamageTaken(damage);
     }
 
     @Override

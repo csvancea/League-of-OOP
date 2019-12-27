@@ -27,22 +27,21 @@ public final class Deflect implements IAbility {
     }
 
     @Override
-    public float computeDamageWithoutModifiers() {
-        return 0.00f;
+    public int computeDamageWithoutModifiers() {
+        return 0;
     }
 
     private void apply(final BasicHero attacked, final float heroModifier) {
         float adjustedHeroModifier = Utils.adjustHeroModifier(
                 heroModifier, getAttacker().getAdditiveModifier());
         float percent = BASE_PERCENT + getAttacker().getLevel() * PERCENT_MULTIPLIER;
-        percent = Math.min(percent, MAX_PERCENT) * PERCENT;
+        percent = PERCENT * Math.min(percent, MAX_PERCENT);
 
         int damageTaken = 0;
         float damageGiven;
 
         for (IAbility ability : attacked.getAbilities()) {
-            damageTaken += Math.round(ability.computeDamageWithoutModifiers()
-                                        * attacked.getLandModifier());
+            damageTaken += Math.round(attacked.getLandModifier() * ability.computeDamageWithoutModifiers());
         }
 
         damageGiven = percent * damageTaken * adjustedHeroModifier * getAttacker().getLandModifier();

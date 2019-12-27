@@ -54,7 +54,7 @@ public interface IAbility {
      * @return damage.
      * Pentru abilitatile la care damage-ul depinde de victima (wizard!), retureneaza 0.
      */
-    float computeDamageWithoutModifiers();
+    int computeDamageWithoutModifiers();
 
     /**
      * Calculeaza damage-ul cu multiplicatorul de nivel.

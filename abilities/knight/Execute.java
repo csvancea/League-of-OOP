@@ -29,8 +29,8 @@ public final class Execute implements IAbility {
     }
 
     @Override
-    public float computeDamageWithoutModifiers() {
-        float damage = computeDamageWithLevelMultiplier();
+    public int computeDamageWithoutModifiers() {
+        int damage = computeDamageWithLevelMultiplier();
         return damage;
     }
 
@@ -44,16 +44,17 @@ public final class Execute implements IAbility {
     private void apply(final BasicHero attacked, final float heroModifier) {
         float adjustedHeroModifier = Utils.adjustHeroModifier(
                 heroModifier, getAttacker().getAdditiveModifier());
-        float damage;
+        int damage;
 
         if (isInstantKillAvailable(attacked)) {
             damage = attacked.getHP();
         } else {
             damage = computeDamageWithoutModifiers();
-            damage *= adjustedHeroModifier * getAttacker().getLandModifier();
+            damage = Math.round(getAttacker().getLandModifier() * damage);
+            damage = Math.round(adjustedHeroModifier * damage);
         }
 
-        attacked.increaseDamageTaken(Math.round(damage));
+        attacked.increaseDamageTaken(damage);
     }
 
     @Override
