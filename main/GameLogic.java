@@ -92,7 +92,7 @@ public final class GameLogic {
                 BasicStrategy strategy = StrategyFactory.createStrategy(hero);
 
                 // TODO: check this round!
-                hero.setHP(Math.round(hero.getHP() * strategy.getHPModifier()));
+                hero.setHP((int) (hero.getHP() * strategy.getHPModifier()));
                 hero.increaseAdditiveModifier(strategy.getHeroModifier());
             }
         }
