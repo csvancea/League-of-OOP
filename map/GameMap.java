@@ -56,6 +56,9 @@ public final class GameMap {
     }
 
     public ArrayList<IEntity> getEntities(final int x, final int y) {
+        if (!isValidPosition(x, y)) {
+            return new ArrayList<IEntity>();
+        }
         return this.map[x][y].getEntities();
     }
 
@@ -65,6 +68,16 @@ public final class GameMap {
 
     public int getMaxY() {
         return maxY;
+    }
+
+    private boolean isValidPosition(final int x, final int y) {
+        if (x < 0 || x >= getMaxX()) {
+            return false;
+        }
+        if (y < 0 || y >= getMaxY()) {
+            return false;
+        }
+        return true;
     }
 
     private static final class Cell {
