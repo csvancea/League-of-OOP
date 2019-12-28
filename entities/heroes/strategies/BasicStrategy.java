@@ -19,12 +19,15 @@ public abstract class BasicStrategy {
         if (hp >= getUpperLimitMaxHPMultiplier() * maxHP) {
             hpModifier   = getHighHPHealthModifier();
             heroModifier = getHighHPHeroAdditiveModifier();
-        } else if (hp >= getLowerLimitMaxHPMultiplier() * maxHP) {
+        } else if (hp > getLowerLimitMaxHPMultiplier() * maxHP) {
             hpModifier   = getMidHPHealthModifier();
             heroModifier = getMidHPHeroAdditiveModifier();
-        } else {
+        } else if (hp < getLowerLimitMaxHPMultiplier() * maxHP) {
             hpModifier   = getLowHPHealthModifier();
             heroModifier = getLowHPHeroAdditiveModifier();
+        } else {
+            hpModifier   = 0.00f;
+            heroModifier = 0.00f;
         }
     }
 
