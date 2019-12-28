@@ -92,7 +92,6 @@ public final class GameLogic {
             if (!hero.isStunned()) {
                 BasicStrategy strategy = StrategyFactory.createStrategy(hero);
 
-                // TODO: check this round!
                 hero.increaseHP((int) (strategy.getHPModifier() * hero.getHP()));
                 hero.increaseAdditiveModifier(strategy.getHeroModifier());
             }

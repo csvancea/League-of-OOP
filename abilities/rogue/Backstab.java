@@ -36,7 +36,7 @@ public final class Backstab implements IAbility {
         int damage = computeDamageWithLevelMultiplier();
         if (hitCount % SPECIAL_HIT_EACH_X_ROUNDS == 0
                 && getAttacker().getSurface().getSurfaceType() == SurfaceType.WOODS) {
-            damage = Math.round(SPECIAL_HIT_MODIFIER * damage); // TODO: this is shitty
+            damage = Math.round(SPECIAL_HIT_MODIFIER * damage);
         }
 
         return damage;

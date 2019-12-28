@@ -41,7 +41,8 @@ public final class Ignite implements IAbility {
         damage = Math.round(getAttacker().getLandModifier() * damage);
         damage = Math.round(adjustedHeroModifier * damage);
 
-        int passiveDamage = PASSIVE_PENALTY_BASE_DAMAGE + getAttacker().getLevel() * PASSIVE_PENALTY_MULTIPLIER;
+        int passiveDamage = PASSIVE_PENALTY_BASE_DAMAGE
+                + getAttacker().getLevel() * PASSIVE_PENALTY_MULTIPLIER;
         passiveDamage = Math.round(getAttacker().getLandModifier() * passiveDamage);
         passiveDamage = Math.round(adjustedHeroModifier * passiveDamage);
 

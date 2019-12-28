@@ -25,8 +25,7 @@ public final class LevelUpAngel extends BasicAngel {
     private void apply(final BasicHero receiver, final float angelModifier) {
         if (!receiver.isDead()) {
             int bonusXP = receiver.getNeededXPForLevelUp() - receiver.getXP();
-            assert (bonusXP > 0);
-            // TODO: bonusul se aplica dupa levelup ul de la kill sau inainte?
+
             support.firePropertyChange("interact", null, receiver);
             receiver.increaseXP(bonusXP);
             receiver.levelUp();

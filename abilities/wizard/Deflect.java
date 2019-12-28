@@ -41,10 +41,12 @@ public final class Deflect implements IAbility {
         float damageGiven;
 
         for (IAbility ability : attacked.getAbilities()) {
-            damageTaken += Math.round(attacked.getLandModifier() * ability.computeDamageWithoutModifiers());
+            damageTaken += Math.round(attacked.getLandModifier()
+                    * ability.computeDamageWithoutModifiers());
         }
 
-        damageGiven = percent * damageTaken * adjustedHeroModifier * getAttacker().getLandModifier();
+        damageGiven = percent * damageTaken;
+        damageGiven *= adjustedHeroModifier * getAttacker().getLandModifier();
         attacked.increaseDamageTaken(Math.round(damageGiven));
     }
 

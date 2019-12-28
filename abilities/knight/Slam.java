@@ -1,7 +1,6 @@
 package abilities.knight;
 
 import abilities.IAbility;
-import abilities.IPassive;
 import abilities.Utils;
 import entities.heroes.BasicHero;
 import entities.heroes.Knight;
@@ -39,7 +38,8 @@ public final class Slam implements IAbility {
         damage = Math.round(getAttacker().getLandModifier() * damage);
         damage = Math.round(adjustedHeroModifier * damage);
 
-        attacked.setPassivePenalty(PASSIVE_PENALTY_ROUNDS, null, attackedHero -> attackedHero.setStunned(false));
+        attacked.setPassivePenalty(PASSIVE_PENALTY_ROUNDS, null,
+                attackedHero -> attackedHero.setStunned(false));
 
         attacked.setStunned(true);
         attacked.increaseDamageTaken(damage);
