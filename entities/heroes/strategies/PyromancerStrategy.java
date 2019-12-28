@@ -6,13 +6,13 @@ public final class PyromancerStrategy extends BasicStrategy {
     private static final float UPPER_LIMIT_MAXHP_MULTIPLIER = 1.00f / 3.00f;
     private static final float LOWER_LIMIT_MAXHP_MULTIPLIER = 1.00f / 4.00f;
 
-    private static final float HIGHHP_HEALTH_MODIFIER = 1.00f;
+    private static final float HIGHHP_HEALTH_MODIFIER = 0.00f;
     private static final float HIGHHP_HERO_ADDITIVE_MODIFIER = 0.00f;
 
-    private static final float MIDHP_HEALTH_MODIFIER = 3.00f / 4.00f;
+    private static final float MIDHP_HEALTH_MODIFIER = -1.00f / 4.00f;
     private static final float MIDHP_HERO_ADDITIVE_MODIFIER = 0.70f;
 
-    private static final float LOWHP_HEALTH_MODIFIER = 4.00f / 3.00f;
+    private static final float LOWHP_HEALTH_MODIFIER = 1.00f / 3.00f;
     private static final float LOWHP_HERO_ADDITIVE_MODIFIER = -0.30f;
 
     public PyromancerStrategy(final BasicHero hero) {

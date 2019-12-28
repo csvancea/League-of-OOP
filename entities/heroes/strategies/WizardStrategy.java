@@ -6,13 +6,13 @@ public final class WizardStrategy extends BasicStrategy {
     private static final float UPPER_LIMIT_MAXHP_MULTIPLIER = 1.00f / 2.00f;
     private static final float LOWER_LIMIT_MAXHP_MULTIPLIER = 1.00f / 4.00f;
 
-    private static final float HIGHHP_HEALTH_MODIFIER = 1.00f;
+    private static final float HIGHHP_HEALTH_MODIFIER = 0.00f;
     private static final float HIGHHP_HERO_ADDITIVE_MODIFIER = 0.00f;
 
-    private static final float MIDHP_HEALTH_MODIFIER = 9.00f / 10.00f;
+    private static final float MIDHP_HEALTH_MODIFIER = -1.00f / 10.00f;
     private static final float MIDHP_HERO_ADDITIVE_MODIFIER = 0.60f;
 
-    private static final float LOWHP_HEALTH_MODIFIER = 6.00f / 5.00f;
+    private static final float LOWHP_HEALTH_MODIFIER = 1.00f / 5.00f;
     private static final float LOWHP_HERO_ADDITIVE_MODIFIER = -0.20f;
 
     public WizardStrategy(final BasicHero hero) {

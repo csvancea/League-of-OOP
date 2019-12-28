@@ -93,7 +93,7 @@ public final class GameLogic {
                 BasicStrategy strategy = StrategyFactory.createStrategy(hero);
 
                 // TODO: check this round!
-                hero.setHP((int) (hero.getHP() * strategy.getHPModifier()));
+                hero.increaseHP((int) (strategy.getHPModifier() * hero.getHP()));
                 hero.increaseAdditiveModifier(strategy.getHeroModifier());
             }
         }
@@ -104,9 +104,12 @@ public final class GameLogic {
             for (IEntity otherEntity : gameMap.getEntities(attacker.getX(), attacker.getY())) {
                 if (otherEntity.getEntityType() == EntityType.HERO) {
                     if (otherEntity != attacker) {
-                        for (IAbility ability : attacker.getAbilities()) {
-                            ability.nextTurn();
-                            ((BasicHero) otherEntity).acceptAbility(ability);
+                        BasicHero attacked = (BasicHero) otherEntity;
+                        if (!attacked.isDead()) {
+                            for (IAbility ability : attacker.getAbilities()) {
+                                ability.nextTurn();
+                                attacked.acceptAbility(ability);
+                            }
                         }
                     }
                 }
