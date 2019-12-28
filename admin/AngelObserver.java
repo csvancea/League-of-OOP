@@ -1,4 +1,4 @@
-package observers;
+package admin;
 
 import entities.angels.BasicAngel;
 import fileio.implementations.FileWriter;

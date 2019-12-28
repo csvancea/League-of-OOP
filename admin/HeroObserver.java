@@ -1,4 +1,4 @@
-package observers;
+package admin;
 
 import entities.IEntity;
 import entities.heroes.BasicHero;

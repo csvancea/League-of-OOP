@@ -9,8 +9,8 @@ import entities.heroes.strategies.StrategyFactory;
 import map.GameMap;
 import entities.IEntity;
 import entities.EntityType;
-import observers.HeroObserver;
-import observers.AngelObserver;
+import admin.HeroObserver;
+import admin.AngelObserver;
 
 import java.io.IOException;
 import java.util.Comparator;
