@@ -102,7 +102,7 @@ public abstract class BasicHero implements IEntity {
      * @return True daca este mort, altfel False
      */
     public final boolean isDead() {
-        return getHP() == 0;
+        return getHP() <= 0;
     }
 
     /**
@@ -202,7 +202,7 @@ public abstract class BasicHero implements IEntity {
             onRevive();
         }
 
-        this.hp = Math.max(0, Math.min(getMaxHP(), newHP)); // clamp between [0 .. maxHP]
+        this.hp = Math.min(getMaxHP(), newHP); // clamp between [-inf .. maxHP]
 
         if (isDead()) {
             IEntity attacker = getLastAttacker();
