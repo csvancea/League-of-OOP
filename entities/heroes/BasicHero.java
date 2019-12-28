@@ -321,9 +321,6 @@ public abstract class BasicHero implements IEntity {
      */
     public final void applyPassivePenalty() {
         if (passiveJustEnded) {
-            if (passivePenaltyFinish != null) {
-                passivePenaltyFinish.apply(this);
-            }
             setPassivePenalty(0, null, null);
         }
 
