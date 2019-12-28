@@ -1,6 +1,7 @@
 package main;
 
 import abilities.IAbility;
+import admin.GrandMagician;
 import entities.angels.BasicAngel;
 import fileio.implementations.FileWriter;
 import entities.heroes.BasicHero;
@@ -27,8 +28,6 @@ public final class GameLogic {
     private final List<List<BasicAngel>> roundAngels;
 
     private final FileWriter fileWriter;
-    private final AngelObserver angelObserver;
-    private final HeroObserver heroObserver;
 
     public GameLogic(final IGameLoader gameLoader, final FileWriter fileWriter) {
         gameMap = gameLoader.getGameMap();
@@ -37,9 +36,6 @@ public final class GameLogic {
         roundAngels = gameLoader.getRoundAngels();
 
         this.fileWriter = fileWriter;
-        this.angelObserver = new AngelObserver(fileWriter);
-        this.heroObserver = new HeroObserver(fileWriter);
-
         addObservers();
     }
 
@@ -205,13 +201,15 @@ public final class GameLogic {
     }
 
     private void addObservers() {
+        GrandMagician.getInstance().setFileWriter(fileWriter);
+
         for (BasicHero hero : heroesList) {
-            hero.addPropertyChangeListener(heroObserver);
+            hero.addPropertyChangeListener(HeroObserver.getInstance());
         }
 
         for (List<BasicAngel> angelsList : roundAngels) {
             for (BasicAngel angel : angelsList) {
-                angel.addPropertyChangeListener(angelObserver);
+                angel.addPropertyChangeListener(AngelObserver.getInstance());
             }
         }
     }
