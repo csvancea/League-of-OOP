@@ -49,8 +49,8 @@ public final class GameLogic {
             fileWriter.writeWord(String.format("~~ Round %d ~~", roundIdx + 1));
             fileWriter.writeNewLine();
 
-            doHeroMoves(round);
             applyPassivePenalties();
+            doHeroMoves(round);
 
             List<BasicHero> aliveHeroes = getAliveHeroesList();
 

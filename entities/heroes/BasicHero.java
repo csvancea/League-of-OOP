@@ -136,7 +136,7 @@ public abstract class BasicHero implements IEntity {
         return y;
     }
     public final void setPosition(final int newX, final int newY) {
-        if (isDead()) {
+        if (isDead() || isStunned()) {
             return;
         }
 
