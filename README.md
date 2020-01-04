@@ -3,8 +3,8 @@ Proiect POO - Etapa 1 & 2
 Student: Cosmin-Razvan Vancea - 323 CA
 
 
-# Pachete:
-
+# Urmatoarele pachete au fost create in Etapa 1:
+================================================
 * Tema a fost modularizata pe pachete, fiecare pachet avand un rol bine definit:
   * **main**:
     - Main:
@@ -28,6 +28,15 @@ Student: Cosmin-Razvan Vancea - 323 CA
         acea celula. 
         - o instanta `ISurface` reprezentand tipul de suprafata (`Woods`,
         `Volcanic` etc)
+  * **abilities**:
+    - toate abilitatile jocului, impartite pe pachete in functie de eroul care
+    le detine
+    - aceasta impartire nu denota nicio restrictie, in sensul ca un erou poate
+    avea orice abilitate, nu doar pe cele din pachetul sau
+    - abilitatile implementeaza interfata: `IAbility`
+    - exista si interfata `IPassive` care permite implementarea de actiuni
+    ce vor afecta un erou overtime. Trebuie suprascrisa metoda `apply` cu
+    logica efectului overtime. (ex: stun, damage etc)
   * **entities**
     - in acest pachet se gasesc implementarile entitatilor ce pot fi plasate
     pe harta. Momentan, acestea sunt: *erou* si *inger*
@@ -42,7 +51,11 @@ Student: Cosmin-Razvan Vancea - 323 CA
         - `Knight`, `Pyromancer`, `Rogue`, `Wizard`
       - HeroFactory:
         - factory pentru tipurile de eroi
-      **strategies**:
+
+# Urmatoarele pachete au fost adaugate in Etapa 2:
+==================================================
+  * **entities**:
+    *  **strategies**:
         - BasicStrategy:
           - clasa abstracta reprezentand tipul de baza al strategiei
           - implementeaza structura pe care trebuie sa o aiba o strategie:
@@ -64,15 +77,6 @@ Student: Cosmin-Razvan Vancea - 323 CA
         - **evil**
       - fiecare implementare este responsabila sa notifice observatorii cand
       aplica o actiune pe un erou 
-  * **abilities**:
-    - toate abilitatile jocului, impartite pe pachete in functie de eroul care
-    le detine
-    - aceasta impartire nu denota nicio restrictie, in sensul ca un erou poate
-    avea orice abilitate, nu doar pe cele din pachetul sau
-    - abilitatile implementeaza interfata: `IAbility`
-    - exista si interfata `IPassive` care permite implementarea de actiuni
-    ce vor afecta un erou overtime. Trebuie suprascrisa metoda `apply` cu
-    logica efectului overtime. (ex: stun, damage etc)
   * **admin**:
     - aici este facuta implementarea *Marelui Magician*
     - observatorii au fost implementati folosind `PropertyChangeListener`
@@ -93,7 +97,8 @@ Student: Cosmin-Razvan Vancea - 323 CA
     acesta are rolul de a scrie informatiile in fisierul de iesire
 
     
-# Concepte OOP: 
+# Concepte OOP (folosite la implementarea ambelor etape):
+=========================================================
 
 ## Visitor:
   * Folosit pentru: 
