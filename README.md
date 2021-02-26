@@ -3,8 +3,8 @@ Proiect POO - Etapa 1 & 2
 Student: Cosmin-Razvan Vancea - 323 CA
 
 
-# Urmatoarele pachete au fost create in Etapa 1:
-================================================
+## Urmatoarele pachete au fost create in Etapa 1:
+
 * Tema a fost modularizata pe pachete, fiecare pachet avand un rol bine definit:
   * **main**:
     - Main:
@@ -52,8 +52,8 @@ Student: Cosmin-Razvan Vancea - 323 CA
       - HeroFactory:
         - factory pentru tipurile de eroi
 
-# Urmatoarele pachete au fost adaugate in Etapa 2:
-==================================================
+## Urmatoarele pachete au fost adaugate in Etapa 2:
+
   * **entities**:
     *  **strategies**:
         - BasicStrategy:
@@ -97,10 +97,9 @@ Student: Cosmin-Razvan Vancea - 323 CA
     acesta are rolul de a scrie informatiile in fisierul de iesire
 
     
-# Concepte OOP (folosite la implementarea ambelor etape):
-=========================================================
+## Concepte OOP (folosite la implementarea ambelor etape):
 
-## Visitor:
+### Visitor:
   * Folosit pentru: 
     1. interactiunea dintre abilitatea atacantului si eroul atacat
       * L-am folosit in acest caz datorita *hero modifier*-ului ce difera
@@ -111,7 +110,7 @@ Student: Cosmin-Razvan Vancea - 323 CA
       diferit eroii in functie de tipul lor
       * Logica: eroul *accepta* ajutorul/atacul ingerului 
 
-## Factory:
+### Factory:
   * Folosit pentru:
     1. crearea eroilor in functie de tipul lor
     2. crearea ingerilor in functie de tipul lor
@@ -120,7 +119,7 @@ Student: Cosmin-Razvan Vancea - 323 CA
     5. crearea marelui magician
     6. crearea observatorilor
 
-## Observer:
+### Observer:
   * Folosit pentru implementarea *Marelui Magician* (denumit *admin* in cod)
   * clasele observabile sunt:
     * BasicAngel
@@ -136,11 +135,11 @@ Student: Cosmin-Razvan Vancea - 323 CA
         - un erou este inviat;
         - este schimbat nivelul unui erou.
 
-## Strategy:
+### Strategy:
   * Folosit pentru alegerea unei strategii de joc in functie de tipul de erou
   care o va aplica.
 
-## Depencency injection:
+### Depencency injection:
   * Folosit pentru interactiunea intre clase.
   * Clase ce folosesc depencency injection:
     * BasicHero -> se injecteaza:
@@ -155,7 +154,7 @@ Student: Cosmin-Razvan Vancea - 323 CA
       - IGameLogic
       - FileWriter
 
-## Singleton:
+### Singleton:
   * Folosit pentru:
     1. instantierea Hartii:
       * Initial, in etapa 1 nu am folosit singleton pentru harta deoarece am
@@ -168,7 +167,7 @@ Student: Cosmin-Razvan Vancea - 323 CA
       injectata eroului (folosind conceptul depencency injection)
     2. instantierea *Marelui Magician* si a observatorilor asociati
 
-## Mosteniri/interfete:
+### Mosteniri/interfete:
   1. pentru tipurile de eroi
   2. pentru tipurile de ingeri
   3. pentru tipurile de strategii
